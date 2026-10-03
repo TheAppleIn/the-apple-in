@@ -167,15 +167,27 @@ export const Contact: React.FC = () => {
                   </div>
 
                   {contactDetails.cardAddress && (
-                    <div className="p-3.5 rounded-xl bg-gray-50 border border-gray-100 space-y-1">
-                      <span className="text-xs font-bold uppercase tracking-wider text-gray-500 block">
-                        Additional Branch Reference
-                      </span>
-                      <address className="not-italic leading-relaxed text-xs">
-                        {contactDetails.cardAddress.line1},<br />
+                    <div className="p-4 rounded-xl bg-orange-50/50 border border-orange-200/80 space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold uppercase tracking-wider text-brand-orange block">
+                          Lodge & Signboard Location
+                        </span>
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-brand-orange text-white">
+                          Old Gajuwaka
+                        </span>
+                      </div>
+                      <address className="not-italic leading-relaxed text-xs sm:text-sm text-gray-800">
+                        <strong>{contactDetails.cardAddress.line1}</strong>,<br />
                         {contactDetails.cardAddress.area},<br />
                         {contactDetails.cardAddress.cityStateZip}
                       </address>
+                      <div className="pt-2">
+                        <img
+                          src="/images/apple-in-signboard.jpg"
+                          alt="The Apple IN official signboard at 38 Bus Stop Backside Old Gajuwaka"
+                          className="w-full rounded-lg border border-orange-200 object-cover aspect-[16/9]"
+                        />
+                      </div>
                     </div>
                   )}
                 </div>

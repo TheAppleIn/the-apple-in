@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom';
 import { PageHero } from '../components/PageHero';
 import { SectionHeading } from '../components/SectionHeading';
 import { CTASection } from '../components/CTASection';
-import { BedDouble, Wifi, Shield, CheckCircle, MapPin, Building, UserCheck } from 'lucide-react';
+import { BedDouble, Wifi, Shield, CheckCircle, MapPin, Building, UserCheck, Phone } from 'lucide-react';
 import { contactDetails } from '../data/content';
+import { PricingCalculator } from '../components/PricingCalculator';
 
 export const About: React.FC = () => {
   const brandValues = [
@@ -129,18 +130,27 @@ export const About: React.FC = () => {
       
       {/* 1. OUR HOSPITALITY */}
       <section id="hospitality" className="py-20 bg-[#F7F7F5] border-b border-gray-100 scroll-mt-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
             <div className="lg:col-span-6 relative">
               <div className="relative rounded-3xl overflow-hidden shadow-premium border border-gray-200">
                 <img
-                  src="/images/lodge-reception.jpg"
-                  alt="The Apple IN lodge reception and comfortable waiting lounge"
+                  src="/images/lodge-reception-lounge-real.jpg"
+                  alt="The Apple IN lodge verified reception and comfortable waiting lounge"
                   className="w-full aspect-[4/3] object-cover"
                 />
                 <div className="absolute top-4 left-4 bg-brand-dark/90 text-white text-xs font-bold px-3 py-1.5 rounded-full border border-neutral-700 backdrop-blur-sm">
-                  Hospitality Division
+                  Verified Real Premises
+                </div>
+                <div className="absolute bottom-4 left-4 right-4 p-3.5 rounded-2xl bg-white/95 backdrop-blur-md border border-gray-100 flex items-center justify-between text-xs">
+                  <div>
+                    <span className="font-bold text-brand-dark block">Reception & Waiting Lounge</span>
+                    <span className="text-gray-500">38 Bus Stop Backside, Old Gajuwaka</span>
+                  </div>
+                  <span className="px-2.5 py-1 rounded-full bg-brand-orange/10 text-brand-orange font-bold text-[11px]">
+                    24/7 Front Desk
+                  </span>
                 </div>
               </div>
             </div>
@@ -156,46 +166,134 @@ export const About: React.FC = () => {
               </h2>
 
               <p className="text-base text-gray-700 leading-relaxed">
-                The Apple IN Lodge & Dormitory was developed to provide clean, comfortable, and well-managed stays for travelers, industrial contractors, job aspirants, and visitors to the Visakhapatnam and Gajuwaka areas.
+                <strong>The Apple IN Lodge & Dormitory</strong> provides budget-friendly, sanitized, and modern accommodations in the heart of Old Gajuwaka, Visakhapatnam. Centrally situated near 38 Bus Stop, we cater to travelers, corporate visitors, industrial professionals, and families.
               </p>
 
               <div className="space-y-3">
                 <div className="p-4 rounded-xl bg-white border border-gray-100 shadow-sm flex items-start gap-3">
                   <CheckCircle className="w-4 h-4 text-brand-orange shrink-0 mt-0.5" />
                   <div>
-                    <h3 className="text-sm font-bold text-brand-dark">AC & Non-AC Rooms</h3>
-                    <p className="text-xs text-gray-600 mt-0.5">Private bedrooms with climate control, modern lighting, and comfortable beds.</p>
+                    <h3 className="text-sm font-bold text-brand-dark">Low Price AC Rooms — ₹799</h3>
+                    <p className="text-xs text-gray-600 mt-0.5">Private bedrooms with individual split AC, clean double bed, spotless linens, and attached bath.</p>
                   </div>
                 </div>
 
                 <div className="p-4 rounded-xl bg-white border border-gray-100 shadow-sm flex items-start gap-3">
                   <CheckCircle className="w-4 h-4 text-brand-orange shrink-0 mt-0.5" />
                   <div>
-                    <h3 className="text-sm font-bold text-brand-dark">Dormitory Accommodation</h3>
-                    <p className="text-xs text-gray-600 mt-0.5">Organized bunk setups featuring individual power sockets, reading lamps, and personal lockable storage.</p>
+                    <h3 className="text-sm font-bold text-brand-dark">Low Price Non-AC Rooms — ₹549</h3>
+                    <p className="text-xs text-gray-600 mt-0.5">Well-ventilated comfortable rooms with high-speed ceiling fan, clean bedding, and daily maintenance.</p>
                   </div>
                 </div>
 
                 <div className="p-4 rounded-xl bg-white border border-gray-100 shadow-sm flex items-start gap-3">
                   <CheckCircle className="w-4 h-4 text-brand-orange shrink-0 mt-0.5" />
                   <div>
-                    <h3 className="text-sm font-bold text-brand-dark">Daily Maintenance & Hygiene</h3>
-                    <p className="text-xs text-gray-600 mt-0.5">Rigorous housekeeping standards to ensure clean bed linens, sanitized washrooms, and spotless floors.</p>
+                    <h3 className="text-sm font-bold text-brand-dark">Dormitory Non/AC Beds (24 Hours) — ₹200</h3>
+                    <p className="text-xs text-gray-600 mt-0.5">Organized shared bunk accommodation with individual luggage lockers and full 24-hour stay allowance.</p>
                   </div>
                 </div>
               </div>
 
-              <div className="pt-2">
+              <div className="pt-2 flex flex-wrap items-center gap-3">
+                <a
+                  href={`tel:${contactDetails.primaryPhoneRaw}`}
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold text-white bg-brand-orange hover:bg-brand-orange-hover shadow-sm transition-colors"
+                >
+                  <Phone className="w-4 h-4" />
+                  <span>Call to Reserve: +91 {contactDetails.primaryPhone}</span>
+                </a>
                 <Link
                   to="/contact"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold text-white bg-brand-dark hover:bg-neutral-800 transition-colors"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold text-brand-dark bg-white hover:bg-gray-100 border border-gray-300 transition-colors"
                 >
-                  <span>Enquire About Availability</span>
+                  <span>Contact Management</span>
                 </Link>
               </div>
             </div>
 
           </div>
+
+          {/* Real Photo Gallery of the Premises */}
+          <div className="space-y-6 pt-6 border-t border-gray-200/80">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+              <div>
+                <span className="text-xs font-bold uppercase tracking-wider text-brand-orange block mb-1">
+                  On-Site Photography
+                </span>
+                <h3 className="text-2xl font-bold font-display text-brand-dark">
+                  Real Premises & Facilities
+                </h3>
+              </div>
+              <p className="text-xs text-gray-500 max-w-md">
+                100% genuine photographs taken directly on-site at # 7-15-19, 38 Bus Stop Backside, Old Gajuwaka.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="group rounded-2xl overflow-hidden bg-white border border-gray-200 shadow-sm">
+                <div className="aspect-[4/3] overflow-hidden">
+                  <img
+                    src="/images/lodge-ac-bedroom-real.jpg"
+                    alt="Verified AC Executive Bedroom"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="p-3.5">
+                  <h4 className="text-xs font-bold text-brand-dark">AC Executive Bedroom</h4>
+                  <p className="text-[11px] text-gray-500 mt-0.5">Low Price: ₹799 with Split AC</p>
+                </div>
+              </div>
+
+              <div className="group rounded-2xl overflow-hidden bg-white border border-gray-200 shadow-sm">
+                <div className="aspect-[4/3] overflow-hidden">
+                  <img
+                    src="/images/lodge-non-ac-room-real.jpg"
+                    alt="Verified Low Price Non-AC Bedroom"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="p-3.5">
+                  <h4 className="text-xs font-bold text-brand-dark">Low Price Non-AC Room</h4>
+                  <p className="text-[11px] text-gray-500 mt-0.5">Low Price Non-AC: ₹549</p>
+                </div>
+              </div>
+
+              <div className="group rounded-2xl overflow-hidden bg-white border border-gray-200 shadow-sm">
+                <div className="aspect-[4/3] overflow-hidden">
+                  <img
+                    src="/images/lodge-reception-lounge-real.jpg"
+                    alt="Designer Reception & Waiting Lounge"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="p-3.5">
+                  <h4 className="text-xs font-bold text-brand-dark">Reception & Lounge Area</h4>
+                  <p className="text-[11px] text-gray-500 mt-0.5">Chandelier & Sofa Seating</p>
+                </div>
+              </div>
+
+              <div className="group rounded-2xl overflow-hidden bg-white border border-gray-200 shadow-sm">
+                <div className="aspect-[4/3] overflow-hidden">
+                  <img
+                    src="/images/apple-in-signboard.jpg"
+                    alt="The Apple IN Official Signboard"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+                <div className="p-3.5">
+                  <h4 className="text-xs font-bold text-brand-dark">Official Signboard</h4>
+                  <p className="text-[11px] text-gray-500 mt-0.5">Old Gajuwaka Bus Stop Backside</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Accommodation Rates & Pricing Calculator */}
+          <div id="rates" className="scroll-mt-24 space-y-8 pt-6 border-t border-gray-200/80">
+            <PricingCalculator />
+          </div>
+
         </div>
       </section>
 

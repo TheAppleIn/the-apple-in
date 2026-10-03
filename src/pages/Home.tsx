@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, BedDouble, Wifi, Shield, CheckCircle2, ChevronRight, Phone, MapPin } from 'lucide-react';
-import { servicePillars, valueCards, contactDetails } from '../data/content';
+import { ArrowRight, BedDouble, Wifi, Shield, CheckCircle2, ChevronRight, Phone, MapPin, Clock, Car } from 'lucide-react';
+import { servicePillars, valueCards, contactDetails, accommodationRates } from '../data/content';
 import { SectionHeading } from '../components/SectionHeading';
 import { CTASection } from '../components/CTASection';
 import { HeroPillarInteractive } from '../components/HeroPillarInteractive';
+import { PricingCalculator } from '../components/PricingCalculator';
+import { RealPremisesWalkthrough } from '../components/RealPremisesWalkthrough';
 
 export const Home: React.FC = () => {
   return (
@@ -283,18 +285,18 @@ export const Home: React.FC = () => {
             <div className="lg:col-span-6 relative">
               <div className="relative rounded-3xl overflow-hidden shadow-premium border border-gray-200/80">
                 <img
-                  src="/images/lodge-room.jpg"
-                  alt="The Apple IN executive bedroom interior with crisp white linens and orange accent runner"
+                  src="/images/lodge-ac-bedroom-real.jpg"
+                  alt="The Apple IN verified AC executive bedroom interior with clean double bedding and split AC"
                   className="w-full aspect-[4/3] object-cover"
                 />
                 {/* Floating Authentic Quote Card */}
                 <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-md rounded-2xl p-4 shadow-soft border border-gray-100 flex items-center justify-between">
                   <div>
                     <div className="text-xs font-bold uppercase tracking-wider text-brand-orange">
-                      The Apple IN Lodge
+                      The Apple IN Lodge & Dormitory
                     </div>
                     <div className="text-sm font-semibold text-brand-dark">
-                      Clean • Convenient • Comfortable
+                      AC from ₹799 • Non-AC ₹549 • Dorm ₹200
                     </div>
                   </div>
                   <span className="text-[11px] font-medium text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full">
@@ -305,6 +307,161 @@ export const Home: React.FC = () => {
             </div>
 
           </div>
+        </div>
+      </section>
+
+
+      {/* =========================================================================
+          HOME — ACCOMMODATION RATES & AMENITIES SECTION
+      ========================================================================= */}
+      <section id="pricing" className="py-20 lg:py-28 bg-[#FAF9F6] border-b border-gray-200/80 scroll-mt-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+          
+          {/* Section Heading */}
+          <SectionHeading
+            badge="Official Tariff & Amenities"
+            title="Affordable, Clean Stays in Visakhapatnam"
+            subtitle="Transparent accommodation rates featuring 24-hour room availability, free high-speed Wi-Fi, 24-hour travel assistance, and CCTV security."
+            align="center"
+          />
+
+          {/* 3 Pricing Cards Grid with Real Photos */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+            {accommodationRates.map((room) => (
+              <div
+                key={room.id}
+                className={`relative rounded-3xl overflow-hidden bg-white border flex flex-col justify-between transition-all duration-300 ${
+                  room.popular
+                    ? 'border-brand-orange shadow-xl shadow-orange-500/10 scale-102 ring-2 ring-brand-orange/20'
+                    : 'border-gray-200 hover:border-gray-300 shadow-soft hover:shadow-premium'
+                }`}
+              >
+                {room.badge && (
+                  <div className="absolute top-4 right-4 z-10 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-brand-orange text-white shadow-sm">
+                    {room.badge}
+                  </div>
+                )}
+
+                <div>
+                  {/* Real Photo Container */}
+                  <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
+                    <img
+                      src={room.image}
+                      alt={room.name}
+                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    <span className="absolute bottom-3 left-3 text-xs font-bold text-white bg-black/60 backdrop-blur-sm px-2.5 py-1 rounded-lg">
+                      {room.category}
+                    </span>
+                  </div>
+
+                  {/* Card Content */}
+                  <div className="p-6 sm:p-7 space-y-4">
+                    <div>
+                      <h3 className="text-xl font-bold font-display text-brand-dark">
+                        {room.name}
+                      </h3>
+                      <p className="text-xs text-gray-500 mt-1 leading-relaxed">
+                        {room.description}
+                      </p>
+                    </div>
+
+                    <div className="pt-2 pb-1 border-y border-gray-100 flex items-baseline gap-1">
+                      <span className="text-3xl sm:text-4xl font-extrabold text-brand-orange font-display">
+                        ₹{room.priceDisplay}
+                      </span>
+                      <span className="text-xs text-gray-500 font-medium ml-1">
+                        /{room.unit}
+                      </span>
+                    </div>
+
+                    {/* Features List */}
+                    <ul className="space-y-2 pt-1">
+                      {room.features.map((feat, idx) => (
+                        <li key={idx} className="flex items-start gap-2 text-xs text-gray-700">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-brand-orange shrink-0 mt-0.5" />
+                          <span>{feat}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Card Action */}
+                <div className="p-6 pt-0">
+                  <a
+                    href={`https://wa.me/91${contactDetails.primaryPhoneRaw}?text=${encodeURIComponent(`Hi The Apple IN, I want to book ${room.name} (₹${room.priceDisplay}). Please confirm availability.`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`w-full py-3.5 rounded-xl text-xs sm:text-sm font-bold text-center flex items-center justify-center gap-2 transition-all ${
+                      room.popular
+                        ? 'bg-brand-orange hover:bg-brand-orange-hover text-white shadow-md'
+                        : 'bg-brand-dark hover:bg-neutral-800 text-white'
+                    }`}
+                  >
+                    <span>Book on WhatsApp</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </a>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* 4 Official Amenities Strip */}
+          <div className="rounded-3xl bg-white p-6 sm:p-8 border border-gray-200/90 shadow-sm">
+            <h4 className="text-base sm:text-lg font-bold font-display text-brand-dark mb-4 text-center sm:text-left">
+              Key Features & Amenities Included
+            </h4>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="p-4 rounded-2xl bg-orange-50/60 border border-orange-100 flex items-start gap-3.5">
+                <div className="w-10 h-10 rounded-xl bg-brand-orange text-white flex items-center justify-center shrink-0 shadow-xs">
+                  <Wifi className="w-5 h-5" />
+                </div>
+                <div>
+                  <h5 className="text-sm font-bold text-brand-dark">Free High-Speed Wi-Fi</h5>
+                  <p className="text-xs text-gray-600 mt-0.5">High-speed optical fiber internet across all rooms & dormitory.</p>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-orange-50/60 border border-orange-100 flex items-start gap-3.5">
+                <div className="w-10 h-10 rounded-xl bg-brand-orange text-white flex items-center justify-center shrink-0 shadow-xs">
+                  <Clock className="w-5 h-5" />
+                </div>
+                <div>
+                  <h5 className="text-sm font-bold text-brand-dark">24 Hours Room Availability</h5>
+                  <p className="text-xs text-gray-600 mt-0.5">Round-the-clock check-in and room readiness at any hour.</p>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-orange-50/60 border border-orange-100 flex items-start gap-3.5">
+                <div className="w-10 h-10 rounded-xl bg-brand-orange text-white flex items-center justify-center shrink-0 shadow-xs">
+                  <Car className="w-5 h-5" />
+                </div>
+                <div>
+                  <h5 className="text-sm font-bold text-brand-dark">24 Hours Available Travel</h5>
+                  <p className="text-xs text-gray-600 mt-0.5">Assistance with transport and direct connectivity near 38 Bus Stop.</p>
+                </div>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-orange-50/60 border border-orange-100 flex items-start gap-3.5">
+                <div className="w-10 h-10 rounded-xl bg-brand-orange text-white flex items-center justify-center shrink-0 shadow-xs">
+                  <Shield className="w-5 h-5" />
+                </div>
+                <div>
+                  <h5 className="text-sm font-bold text-brand-dark">CCTV Surveillance</h5>
+                  <p className="text-xs text-gray-600 mt-0.5">HD security cameras safeguarding all corridors and entrances.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Interactive Multi-Day Pricing Calculator */}
+          <PricingCalculator />
+
+          {/* Verified On-Site Photos & Interactive Walkthrough */}
+          <RealPremisesWalkthrough />
+
         </div>
       </section>
 

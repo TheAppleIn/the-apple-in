@@ -3,14 +3,17 @@ import { PageHero } from '../components/PageHero';
 import { SectionHeading } from '../components/SectionHeading';
 import { CTASection } from '../components/CTASection';
 import { galleryItems } from '../data/content';
-import { BedDouble, Wifi, Shield, X, Maximize2, Sparkles } from 'lucide-react';
+import { BedDouble, Wifi, Shield, X, Maximize2, Sparkles, CheckCircle2 } from 'lucide-react';
+import { RealPremisesWalkthrough } from '../components/RealPremisesWalkthrough';
 
 export const Gallery: React.FC = () => {
-  const [activeFilter, setActiveFilter] = useState<'All' | 'Lodge' | 'Internet' | 'CCTV'>('All');
+  const [activeFilter, setActiveFilter] = useState<'All' | 'Real Premises' | 'Lodge' | 'Internet' | 'CCTV'>('All');
   const [selectedImage, setSelectedImage] = useState<typeof galleryItems[0] | null>(null);
 
   const filteredItems = activeFilter === 'All'
     ? galleryItems
+    : activeFilter === 'Real Premises'
+    ? galleryItems.filter((item) => (item as any).verified)
     : galleryItems.filter((item) => item.category === activeFilter);
 
   return (
@@ -20,7 +23,7 @@ export const Gallery: React.FC = () => {
         title="Explore The Apple IN Experience"
         subtitle="A visual showcase of our accommodation interiors, optical networking projects, and professional surveillance installations in Visakhapatnam."
         badge="Visual Portfolio"
-        imageSrc="/images/lodge-reception.jpg"
+        imageSrc="/images/lodge-reception-lounge-real.jpg"
         imageAlt="The Apple IN lodge reception and hospitality atmosphere"
         currentPage="Gallery & Experience"
       />
@@ -29,19 +32,22 @@ export const Gallery: React.FC = () => {
           GALLERY SECTION WITH FILTER TABS
       ========================================================================= */}
       <section className="py-20 lg:py-28 bg-[#F7F7F5]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+
+          {/* Real Premises Photo Walkthrough Component */}
+          <RealPremisesWalkthrough />
           
           {/* Section Header & Filter Tabs */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-12 border-b border-gray-200">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-gray-200">
             <SectionHeading
               badge="Real Spaces & Installations"
               title="Project & Facility Gallery"
-              subtitle="Filter through our hospitality spaces, broadband networking infrastructure, and surveillance deployments."
+              subtitle="Filter through our verified lodge premises, broadband networking infrastructure, and surveillance deployments."
             />
 
             {/* Filter Buttons */}
             <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-white border border-gray-200 shadow-sm self-start md:self-auto">
-              {(['All', 'Lodge', 'Internet', 'CCTV'] as const).map((cat) => (
+              {(['All', 'Real Premises', 'Lodge', 'Internet', 'CCTV'] as const).map((cat) => (
                 <button
                   key={cat}
                   type="button"
@@ -79,9 +85,17 @@ export const Gallery: React.FC = () => {
                 {/* Content Overlay / Banner */}
                 <div className="p-5 flex flex-col justify-between space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-brand-orange px-2.5 py-0.5 rounded-full bg-brand-orange-light">
-                      {item.category}
-                    </span>
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-brand-orange px-2.5 py-0.5 rounded-full bg-brand-orange-light">
+                        {item.category}
+                      </span>
+                      {(item as any).verified && (
+                        <span className="inline-flex items-center gap-1 text-[10px] font-bold text-green-700 bg-green-50 px-2 py-0.5 rounded-full border border-green-200">
+                          <CheckCircle2 className="w-3 h-3 text-green-600" />
+                          <span>Verified Premises</span>
+                        </span>
+                      )}
+                    </div>
                     <button
                       type="button"
                       aria-label="Enlarge image"
