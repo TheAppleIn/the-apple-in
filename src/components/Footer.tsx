@@ -139,7 +139,7 @@ export const Footer: React.FC = () => {
               Contact Us
             </h3>
             <div className="space-y-3 text-sm text-gray-400">
-              {/* Phone 1 */}
+              {/* Phone 1: Gajuwaka */}
               <div className="flex items-start gap-2.5">
                 <Phone className="w-4 h-4 text-brand-orange shrink-0 mt-0.5" />
                 <div>
@@ -149,13 +149,27 @@ export const Footer: React.FC = () => {
                   >
                     +91 {contactDetails.primaryPhone}
                   </a>
-                  <span className="text-[11px] text-gray-500">General / Lodge</span>
+                  <span className="text-[11px] text-gray-400">Gajuwaka Main Lodge</span>
                 </div>
               </div>
 
-              {/* Phone 2 */}
+              {/* Phone 2: Srinagar Branch */}
               <div className="flex items-start gap-2.5">
                 <Phone className="w-4 h-4 text-brand-orange shrink-0 mt-0.5" />
+                <div>
+                  <a
+                    href={`tel:${contactDetails.srinagarPhoneRaw}`}
+                    className="hover:text-white text-gray-200 block font-medium"
+                  >
+                    +91 {contactDetails.srinagarPhone}
+                  </a>
+                  <span className="text-[11px] text-brand-orange font-medium">Srinagar Branch (Hostel & Rooms)</span>
+                </div>
+              </div>
+
+              {/* Phone 3: Aganampudi Tech Hub */}
+              <div className="flex items-start gap-2.5">
+                <Phone className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
                 <div>
                   <a
                     href={`tel:${contactDetails.secondaryPhoneRaw}`}
@@ -163,7 +177,7 @@ export const Footer: React.FC = () => {
                   >
                     +91 {contactDetails.secondaryPhone}
                   </a>
-                  <span className="text-[11px] text-gray-500">Service Assistance</span>
+                  <span className="text-[11px] text-blue-400 font-medium">Internet & CCTV (Aganampudi Hub)</span>
                 </div>
               </div>
 
@@ -178,14 +192,55 @@ export const Footer: React.FC = () => {
                 </a>
               </div>
 
-              {/* Address */}
+              {/* Branch 1 Address */}
               <div className="flex items-start gap-2.5 pt-1">
                 <MapPin className="w-4 h-4 text-brand-orange shrink-0 mt-0.5" />
-                <address className="not-italic text-xs text-gray-400 leading-relaxed">
-                  {contactDetails.primaryAddress.line1}, {contactDetails.primaryAddress.area},<br />
-                  {contactDetails.primaryAddress.cityStateZip}<br />
-                  <span className="text-gray-500 text-[11px]">({contactDetails.primaryAddress.landmark})</span>
-                </address>
+                <div className="text-xs text-gray-400 leading-relaxed">
+                  <a
+                    href={contactDetails.gajuwakaMapUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold text-gray-200 hover:text-brand-orange transition-colors flex items-center gap-1"
+                  >
+                    <span>Branch 1: Old Gajuwaka (Lodge)</span>
+                    <span className="text-[10px] text-brand-orange underline">Maps</span>
+                  </a>
+                  #7-15-19, 38 Bus Stop Backside, Old Gajuwaka, Visakhapatnam – 530026
+                </div>
+              </div>
+
+              {/* Branch 2 Address */}
+              <div className="flex items-start gap-2.5 pt-1">
+                <MapPin className="w-4 h-4 text-brand-orange shrink-0 mt-0.5" />
+                <div className="text-xs text-gray-400 leading-relaxed">
+                  <a
+                    href={contactDetails.srinagarMapUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold text-gray-200 hover:text-brand-orange transition-colors flex items-center gap-1"
+                  >
+                    <span>Branch 2: Srinagar (Hostel & Rooms)</span>
+                    <span className="text-[10px] text-brand-orange underline">Maps</span>
+                  </a>
+                  27-7-43/1, Near Ramalayam Arch & Apollo Pharma, Visakhapatnam – 530026
+                </div>
+              </div>
+
+              {/* Tech Hub Address */}
+              <div className="flex items-start gap-2.5 pt-1">
+                <MapPin className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
+                <div className="text-xs text-gray-400 leading-relaxed">
+                  <a
+                    href={contactDetails.aganampudiMapUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold text-gray-200 hover:text-blue-400 transition-colors flex items-center gap-1"
+                  >
+                    <span>Internet & CCTV Hub: Aganampudi</span>
+                    <span className="text-[10px] text-blue-400 underline">Maps</span>
+                  </a>
+                  8-6, Near Srinivasa Kalyanamandapam, Aganampudi, Visakhapatnam – 530046
+                </div>
               </div>
             </div>
           </div>

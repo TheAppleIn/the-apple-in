@@ -6,6 +6,7 @@ import { CTASection } from '../components/CTASection';
 import { BedDouble, Wifi, Shield, CheckCircle, MapPin, Building, UserCheck, Phone } from 'lucide-react';
 import { contactDetails } from '../data/content';
 import { PricingCalculator } from '../components/PricingCalculator';
+import { BranchShowcase } from '../components/BranchShowcase';
 
 export const About: React.FC = () => {
   const brandValues = [
@@ -166,7 +167,7 @@ export const About: React.FC = () => {
               </h2>
 
               <p className="text-base text-gray-700 leading-relaxed">
-                <strong>The Apple IN Lodge & Dormitory</strong> provides budget-friendly, sanitized, and modern accommodations in the heart of Old Gajuwaka, Visakhapatnam. Centrally situated near 38 Bus Stop, we cater to travelers, corporate visitors, industrial professionals, and families.
+                <strong>The Apple IN</strong> operates two prime branches in Visakhapatnam: our flagship <strong>Old Gajuwaka Lodge & Dormitory</strong> (near 38 Bus Stop backside) and our modern <strong>Srinagar Branch Hostel & Rooms</strong> (near Ramalayam Arch & Apollo Pharmacy). We cater to travelers, corporate visitors, industrial professionals, students, and job seekers.
               </p>
 
               <div className="space-y-3">
@@ -174,14 +175,14 @@ export const About: React.FC = () => {
                   <CheckCircle className="w-4 h-4 text-brand-orange shrink-0 mt-0.5" />
                   <div>
                     <h3 className="text-sm font-bold text-brand-dark">Low Price AC Rooms — ₹799</h3>
-                    <p className="text-xs text-gray-600 mt-0.5">Private bedrooms with individual split AC, clean double bed, spotless linens, and attached bath.</p>
+                    <p className="text-xs text-gray-600 mt-0.5">Private bedrooms with individual split AC, clean double bed, spotless linens, and attached bath at both branches.</p>
                   </div>
                 </div>
 
                 <div className="p-4 rounded-xl bg-white border border-gray-100 shadow-sm flex items-start gap-3">
                   <CheckCircle className="w-4 h-4 text-brand-orange shrink-0 mt-0.5" />
                   <div>
-                    <h3 className="text-sm font-bold text-brand-dark">Low Price Non-AC Rooms — ₹549</h3>
+                    <h3 className="text-sm font-bold text-brand-dark">Low Price Non-AC Rooms — ₹449</h3>
                     <p className="text-xs text-gray-600 mt-0.5">Well-ventilated comfortable rooms with high-speed ceiling fan, clean bedding, and daily maintenance.</p>
                   </div>
                 </div>
@@ -189,8 +190,16 @@ export const About: React.FC = () => {
                 <div className="p-4 rounded-xl bg-white border border-gray-100 shadow-sm flex items-start gap-3">
                   <CheckCircle className="w-4 h-4 text-brand-orange shrink-0 mt-0.5" />
                   <div>
-                    <h3 className="text-sm font-bold text-brand-dark">Dormitory Non/AC Beds (24 Hours) — ₹200</h3>
-                    <p className="text-xs text-gray-600 mt-0.5">Organized shared bunk accommodation with individual luggage lockers and full 24-hour stay allowance.</p>
+                    <h3 className="text-sm font-bold text-brand-dark">Dormitory & Hostel Beds (24 Hours) — ₹200</h3>
+                    <p className="text-xs text-gray-600 mt-0.5">Organized shared bunk and cot accommodation with individual luggage lockers, key amenities, and full 24-hour stay allowance.</p>
+                  </div>
+                </div>
+
+                <div className="p-4 rounded-xl bg-white border border-gray-100 shadow-sm flex items-start gap-3">
+                  <CheckCircle className="w-4 h-4 text-brand-orange shrink-0 mt-0.5" />
+                  <div>
+                    <h3 className="text-sm font-bold text-brand-dark">New Rooms — Smart Look & Robot Massage Lounge</h3>
+                    <p className="text-xs text-gray-600 mt-0.5">Exclusive to Srinagar Branch: Basic, Deluxe & Suite rooms, plus intelligent robotic massage chair lounge relaxation.</p>
                   </div>
                 </div>
               </div>
@@ -198,17 +207,18 @@ export const About: React.FC = () => {
               <div className="pt-2 flex flex-wrap items-center gap-3">
                 <a
                   href={`tel:${contactDetails.primaryPhoneRaw}`}
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold text-white bg-brand-orange hover:bg-brand-orange-hover shadow-sm transition-colors"
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-full text-xs sm:text-sm font-bold text-white bg-brand-orange hover:bg-brand-orange-hover shadow-sm transition-colors"
                 >
                   <Phone className="w-4 h-4" />
-                  <span>Call to Reserve: +91 {contactDetails.primaryPhone}</span>
+                  <span>Call Gajuwaka: +91 {contactDetails.primaryPhone}</span>
                 </a>
-                <Link
-                  to="/contact"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold text-brand-dark bg-white hover:bg-gray-100 border border-gray-300 transition-colors"
+                <a
+                  href={`tel:${contactDetails.srinagarPhoneRaw}`}
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-full text-xs sm:text-sm font-bold text-gray-900 bg-orange-100 hover:bg-orange-200 border border-orange-300 transition-colors"
                 >
-                  <span>Contact Management</span>
-                </Link>
+                  <Phone className="w-4 h-4 text-brand-orange" />
+                  <span>Call Srinagar: +91 {contactDetails.srinagarPhone}</span>
+                </a>
               </div>
             </div>
 
@@ -292,6 +302,11 @@ export const About: React.FC = () => {
           {/* Accommodation Rates & Pricing Calculator */}
           <div id="rates" className="scroll-mt-24 space-y-8 pt-6 border-t border-gray-200/80">
             <PricingCalculator />
+          </div>
+
+          {/* Two Branches Location Showcase */}
+          <div className="pt-6 border-t border-gray-200/80">
+            <BranchShowcase />
           </div>
 
         </div>

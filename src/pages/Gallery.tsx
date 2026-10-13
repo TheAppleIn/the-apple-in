@@ -5,15 +5,19 @@ import { CTASection } from '../components/CTASection';
 import { galleryItems } from '../data/content';
 import { BedDouble, Wifi, Shield, X, Maximize2, Sparkles, CheckCircle2 } from 'lucide-react';
 import { RealPremisesWalkthrough } from '../components/RealPremisesWalkthrough';
+import { BranchShowcase } from '../components/BranchShowcase';
+import { OfficialFlyersShowcase } from '../components/OfficialFlyersShowcase';
 
 export const Gallery: React.FC = () => {
-  const [activeFilter, setActiveFilter] = useState<'All' | 'Real Premises' | 'Lodge' | 'Internet' | 'CCTV'>('All');
+  const [activeFilter, setActiveFilter] = useState<'Real Premises' | 'All' | 'Official Flyers' | 'Lodge' | 'Internet' | 'CCTV'>('Real Premises');
   const [selectedImage, setSelectedImage] = useState<typeof galleryItems[0] | null>(null);
 
   const filteredItems = activeFilter === 'All'
     ? galleryItems
     : activeFilter === 'Real Premises'
     ? galleryItems.filter((item) => (item as any).verified)
+    : activeFilter === 'Official Flyers'
+    ? galleryItems.filter((item) => item.image.includes('flyer') || item.image.includes('banner'))
     : galleryItems.filter((item) => item.category === activeFilter);
 
   return (
@@ -23,7 +27,7 @@ export const Gallery: React.FC = () => {
         title="Explore The Apple IN Experience"
         subtitle="A visual showcase of our accommodation interiors, optical networking projects, and professional surveillance installations in Visakhapatnam."
         badge="Visual Portfolio"
-        imageSrc="/images/lodge-reception-lounge-real.jpg"
+        imageSrc="/images/apple-inn-banner-wide.png"
         imageAlt="The Apple IN lodge reception and hospitality atmosphere"
         currentPage="Gallery & Experience"
       />
@@ -34,20 +38,24 @@ export const Gallery: React.FC = () => {
       <section className="py-20 lg:py-28 bg-[#F7F7F5]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
 
+          {/* Two Branches Location Showcase */}
+          <BranchShowcase />
+
           {/* Real Premises Photo Walkthrough Component */}
           <RealPremisesWalkthrough />
+          
           
           {/* Section Header & Filter Tabs */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-gray-200">
             <SectionHeading
               badge="Real Spaces & Installations"
               title="Project & Facility Gallery"
-              subtitle="Filter through our verified lodge premises, broadband networking infrastructure, and surveillance deployments."
+              subtitle="Filter through our verified lodge premises, official promotional flyers, broadband networking infrastructure, and surveillance deployments."
             />
 
             {/* Filter Buttons */}
             <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-2xl bg-white border border-gray-200 shadow-sm self-start md:self-auto">
-              {(['All', 'Real Premises', 'Lodge', 'Internet', 'CCTV'] as const).map((cat) => (
+              {(['All', 'Real Premises', 'Official Flyers', 'Lodge', 'Internet', 'CCTV'] as const).map((cat) => (
                 <button
                   key={cat}
                   type="button"
@@ -66,59 +74,82 @@ export const Gallery: React.FC = () => {
 
           {/* Masonry / Grid Gallery */}
           <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredItems.map((item) => (
-              <div
-                key={item.id}
-                onClick={() => setSelectedImage(item)}
-                className="group relative rounded-3xl overflow-hidden bg-white border border-gray-200 shadow-soft hover:shadow-premium cursor-pointer transition-all duration-300"
-              >
-                {/* Image */}
-                <div className="aspect-[16/10] overflow-hidden bg-gray-100">
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                </div>
+            {filteredItems.map((item) => {
+              const isFlyerOrBanner =
+                item.category === 'Official Flyers' ||
+                item.image.includes('flyer') ||
+                item.image.includes('banner');
 
-                {/* Content Overlay / Banner */}
-                <div className="p-5 flex flex-col justify-between space-y-2">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-1.5 flex-wrap">
-                      <span className="text-[11px] font-bold uppercase tracking-wider text-brand-orange px-2.5 py-0.5 rounded-full bg-brand-orange-light">
-                        {item.category}
-                      </span>
-                      {(item as any).verified && (
-                        <span className="inline-flex items-center gap-1 text-[10px] font-bold text-green-700 bg-green-50 px-2 py-0.5 rounded-full border border-green-200">
-                          <CheckCircle2 className="w-3 h-3 text-green-600" />
-                          <span>Verified Premises</span>
-                        </span>
-                      )}
-                    </div>
-                    <button
-                      type="button"
-                      aria-label="Enlarge image"
-                      className="text-gray-400 group-hover:text-brand-dark transition-colors p-1"
-                    >
-                      <Maximize2 className="w-4 h-4" />
-                    </button>
+              return (
+                <div
+                  key={item.id}
+                  onClick={() => setSelectedImage(item)}
+                  className="group relative rounded-3xl overflow-hidden bg-white border border-gray-200 shadow-soft hover:shadow-premium cursor-pointer transition-all duration-300 flex flex-col justify-between"
+                >
+                  {/* Image Container */}
+                  <div
+                    className={`relative overflow-hidden ${
+                      isFlyerOrBanner
+                        ? 'aspect-[4/3] bg-neutral-900 flex items-center justify-center p-2'
+                        : 'aspect-[16/10] bg-gray-100'
+                    }`}
+                  >
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className={`w-full h-full transition-transform duration-500 group-hover:scale-102 ${
+                        isFlyerOrBanner ? 'object-contain' : 'object-cover group-hover:scale-105'
+                      }`}
+                      loading="lazy"
+                    />
+                    {isFlyerOrBanner && (
+                      <div className="absolute top-2 left-2 bg-black/70 backdrop-blur-sm text-[10px] font-bold text-amber-300 px-2 py-0.5 rounded-full border border-amber-500/30">
+                        Official Notice / Flyer
+                      </div>
+                    )}
                   </div>
 
-                  <h3 className="text-base font-bold font-display text-brand-dark group-hover:text-brand-orange transition-colors">
-                    {item.title}
-                  </h3>
+                  {/* Content Overlay / Banner */}
+                  <div className="p-5 flex flex-col justify-between space-y-2 flex-grow">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <span className="text-[11px] font-bold uppercase tracking-wider text-brand-orange px-2.5 py-0.5 rounded-full bg-brand-orange-light">
+                          {item.category}
+                        </span>
+                        {(item as any).verified && (
+                          <span className="inline-flex items-center gap-1 text-[10px] font-bold text-green-700 bg-green-50 px-2 py-0.5 rounded-full border border-green-200">
+                            <CheckCircle2 className="w-3 h-3 text-green-600" />
+                            <span>Verified Premises</span>
+                          </span>
+                        )}
+                      </div>
+                      <button
+                        type="button"
+                        aria-label="Enlarge image"
+                        className="text-gray-400 group-hover:text-brand-dark transition-colors p-1"
+                      >
+                        <Maximize2 className="w-4 h-4" />
+                      </button>
+                    </div>
 
-                  <p className="text-xs text-gray-500 leading-relaxed line-clamp-2">
-                    {item.description}
-                  </p>
+                    <h3 className="text-base font-bold font-display text-brand-dark group-hover:text-brand-orange transition-colors">
+                      {item.title}
+                    </h3>
+
+                    <p className="text-xs text-gray-500 leading-relaxed line-clamp-2">
+                      {item.description}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
+
+      {/* Official Promotional Flyers Showcase */}
+          <OfficialFlyersShowcase />
 
       {/* =========================================================================
           CUSTOMER EXPERIENCE SECTION (Neutral & Grounded — No Fake Reviews)
@@ -188,47 +219,57 @@ export const Gallery: React.FC = () => {
       ========================================================================= */}
       {selectedImage && (
         <div
-          className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200"
+          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200"
           onClick={() => setSelectedImage(null)}
         >
           <div
-            className="relative max-w-4xl w-full bg-white rounded-3xl overflow-hidden shadow-2xl"
+            className="relative max-w-5xl w-full bg-white rounded-3xl overflow-hidden shadow-2xl flex flex-col max-h-[92vh]"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               type="button"
               onClick={() => setSelectedImage(null)}
-              className="absolute top-4 right-4 z-10 p-2.5 rounded-full bg-black/60 text-white hover:bg-black transition-colors"
+              className="absolute top-4 right-4 z-20 p-2.5 rounded-full bg-black/70 text-white hover:bg-black transition-colors"
               aria-label="Close modal"
             >
               <X className="w-5 h-5" />
             </button>
 
-            <div className="aspect-[16/10] bg-black">
+            {/* Modal Image Box */}
+            <div className="bg-neutral-950 flex items-center justify-center max-h-[68vh] min-h-[280px] p-2 sm:p-4 overflow-hidden">
               <img
                 src={selectedImage.image}
                 alt={selectedImage.title}
-                className="w-full h-full object-contain"
+                className="max-h-[64vh] w-auto max-w-full object-contain rounded-lg"
               />
             </div>
 
-            <div className="p-6 bg-white space-y-2">
+            <div className="p-5 sm:p-6 bg-white space-y-2 border-t border-gray-100">
               <div className="flex items-center gap-2">
                 <span className="text-xs font-bold uppercase tracking-wider text-brand-orange px-2.5 py-0.5 rounded-full bg-brand-orange-light">
                   {selectedImage.category}
                 </span>
-                <span className="text-xs text-gray-400">• The Apple IN</span>
+                {(selectedImage as any).verified && (
+                  <span className="inline-flex items-center gap-1 text-[11px] font-bold text-green-700 bg-green-50 px-2 py-0.5 rounded-full border border-green-200">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-green-600" />
+                    <span>Verified On-Site Photograph</span>
+                  </span>
+                )}
+                <span className="text-xs text-gray-400">• The Apple IN Visakhapatnam</span>
               </div>
-              <h3 className="text-xl font-bold font-display text-brand-dark">
+              <h3 className="text-lg sm:text-xl font-bold font-display text-brand-dark">
                 {selectedImage.title}
               </h3>
-              <p className="text-sm text-gray-600 leading-relaxed">
+              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
                 {selectedImage.description}
               </p>
             </div>
           </div>
         </div>
       )}
+
+      
+
 
       {/* Final CTA */}
       <CTASection />

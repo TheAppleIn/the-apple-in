@@ -22,14 +22,14 @@ const pillars: PillarData[] = [
     id: 'lodge',
     title: 'The Apple IN Lodge & Dormitory',
     category: 'Hospitality',
-    badge: 'AC from ₹799 • Non-AC ₹549 • Dorm ₹200',
+    badge: 'AC from ₹799 • Non-AC ₹449 • Dorm ₹200',
     image: '/images/lodge-ac-bedroom-real.jpg',
-    description: 'Clean, comfortable AC and Non-AC rooms & 24-hr dormitory in Old Gajuwaka near 38 Bus Stop.',
+    description: 'Clean, comfortable AC & Non-AC rooms and hostel dormitories across Old Gajuwaka & Srinagar branches.',
     highlights: [
       'Low Price AC Rooms: ₹799',
-      'Low Price Non-AC: ₹549',
-      'Dormitory Beds (24h): ₹200',
-      'Free High-Speed Wi-Fi & 24/7 Travel'
+      'Low Price Non-AC: ₹449',
+      'Dormitory & Hostel: ₹200',
+      'Branches: Gajuwaka & Srinagar'
     ],
     link: '/#pricing',
     ctaText: 'View Rates & Stays',

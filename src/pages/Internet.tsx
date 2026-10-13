@@ -14,6 +14,8 @@ import {
   ArrowRight,
   ShieldAlert,
   Phone,
+  MapPin,
+  ExternalLink,
 } from 'lucide-react';
 import { internetProcessSteps, contactDetails } from '../data/content';
 
@@ -62,6 +64,53 @@ export const Internet: React.FC = () => {
         imageAlt="Professional internet technician setting up high-speed fiber-optic network"
         currentPage="Internet Services"
       />
+
+      {/* Aganampudi Operations Hub Card (Directly After Main Hero Image) */}
+      <section className="bg-[#F7F7F5] py-8 sm:py-10 border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto p-6 sm:p-8 rounded-3xl bg-white border border-gray-200 shadow-soft">
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+              <div className="space-y-2">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-blue-700 bg-blue-50 border border-blue-200">
+                  <MapPin className="w-3.5 h-3.5" />
+                  <span>Internet Service Provider Operations Hub</span>
+                </div>
+                <h2 className="text-xl sm:text-2xl font-bold font-display text-brand-dark">
+                  Visit Our Aganampudi Service Center
+                </h2>
+                <p className="text-xs sm:text-sm text-gray-600">
+                  <strong>{contactDetails.primaryAddress.line1}</strong>, {contactDetails.primaryAddress.area}, {contactDetails.primaryAddress.cityStateZip}<br />
+                  <span className="text-brand-orange font-semibold">Landmark: {contactDetails.primaryAddress.landmark}</span>
+                </p>
+                <p className="text-xs text-gray-500 pt-1">
+                  Customer Support & New Broadband Bookings: <strong className="text-brand-dark">+91 {contactDetails.secondaryPhone}</strong>
+                </p>
+              </div>
+
+              <div className="flex flex-wrap sm:flex-col gap-2.5 w-full sm:w-auto shrink-0">
+                <a
+                  href={contactDetails.aganampudiMapUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 shadow-sm transition-all"
+                >
+                  <MapPin className="w-4 h-4" />
+                  <span>View on Google Maps</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+
+                <a
+                  href={`tel:${contactDetails.secondaryPhoneRaw}`}
+                  className="inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-brand-dark bg-gray-100 hover:bg-gray-200 transition-colors"
+                >
+                  <Phone className="w-4 h-4 text-brand-orange" />
+                  <span>Call {contactDetails.secondaryPhone}</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* =========================================================================
           ISP SERVICE OVERVIEW

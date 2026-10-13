@@ -1,66 +1,128 @@
 import React, { useState } from 'react';
-import { Wifi, Clock, Car, Shield, Check, Phone, MessageSquare, Calculator } from 'lucide-react';
+import { Wifi, Clock, Car, Shield, Phone, MessageSquare, Calculator, Plus, Minus } from 'lucide-react';
 import { contactDetails } from '../data/content';
 
-interface RoomTypeOption {
-  id: 'ac' | 'non-ac' | 'dormitory';
+export interface RoomOptionItem {
+  id: string;
   name: string;
+  category: string;
   price: number;
   priceDisplay: string;
   unit: string;
   badge?: string;
-  icon: string;
   description: string;
+  branch: string;
 }
 
-const roomOptions: RoomTypeOption[] = [
+export const roomCategories: RoomOptionItem[] = [
   {
     id: 'ac',
     name: 'Low Price AC Room',
+    category: 'Executive AC',
     price: 799,
     priceDisplay: '799',
-    unit: 'per 24 hrs',
+    unit: 'room / 24 hrs',
     badge: 'Popular',
-    icon: '❄️',
-    description: 'Private bedroom with split AC, double bed & attached bathroom',
+    description: 'Private bedroom with individual split AC, clean double bed & attached bathroom',
+    branch: 'Gajuwaka & Srinagar',
   },
   {
     id: 'non-ac',
     name: 'Low Price Non-AC Room',
-    price: 549,
-    priceDisplay: '549',
-    unit: 'per 24 hrs',
-    badge: 'Economy',
-    icon: '🛏️',
-    description: 'Clean ventilated bedroom with high-speed ceiling fan & daily housekeeping',
+    category: 'Standard Non-AC',
+    price: 449,
+    priceDisplay: '449',
+    unit: 'room / 24 hrs',
+    badge: 'Special Offer',
+    description: 'Well-ventilated bedroom with high-speed ceiling fan, fresh bedding & daily housekeeping',
+    branch: 'Gajuwaka & Srinagar',
   },
   {
     id: 'dormitory',
-    name: 'Dormitory Non/AC Beds',
+    name: 'Dormitory & Hostel Beds',
+    category: 'Shared Hostel',
     price: 200,
     priceDisplay: '200',
-    unit: 'per bed / 24 hrs',
+    unit: 'bed / 24 hrs',
     badge: 'Best Value',
-    icon: '🏨',
-    description: 'Individual shared bunk bed accommodation with secure locker access',
+    description: 'Shared cot bed accommodation with private luggage lockers and key amenities',
+    branch: 'Gajuwaka & Srinagar',
+  },
+  {
+    id: 'deluxe',
+    name: 'Deluxe & Suite Rooms',
+    category: 'Smart Look',
+    price: 799,
+    priceDisplay: '799',
+    unit: 'room / 24 hrs',
+    badge: 'Smart Look',
+    description: 'Modern room with elegant decor, split AC, waiting lobby & robot massage access',
+    branch: 'Srinagar Branch',
   },
 ];
 
 export const PricingCalculator: React.FC = () => {
-  const [selectedType, setSelectedType] = useState<'ac' | 'non-ac' | 'dormitory'>('ac');
-  const [roomsCount, setRoomsCount] = useState<number>(1);
+  const [selectedBranch, setSelectedBranch] = useState<'both' | 'gajuwaka' | 'srinagar'>('both');
+  
+  // Multi-room selections state: map of roomId -> quantity
+  const [roomQuantities, setRoomQuantities] = useState<Record<string, number>>({
+    'ac': 1,
+    'non-ac': 0,
+    'dormitory': 0,
+    'deluxe': 0,
+  });
+
   const [daysCount, setDaysCount] = useState<number>(1);
 
-  const selectedRoom = roomOptions.find((r) => r.id === selectedType) || roomOptions[0];
-  const totalAmount = selectedRoom.price * roomsCount * daysCount;
+  // Update room quantity
+  const updateQuantity = (id: string, delta: number) => {
+    setRoomQuantities((prev) => {
+      const current = prev[id] || 0;
+      const next = Math.max(0, current + delta);
+      return { ...prev, [id]: next };
+    });
+  };
+
+  // Filter rooms based on selected branch
+  const filteredRooms = roomCategories.filter((r) => {
+    if (selectedBranch === 'gajuwaka') {
+      return r.id !== 'deluxe'; // Deluxe is primarily Srinagar exclusive
+    }
+    return true;
+  });
+
+  // Calculate totals across all selected room types
+  const selectedSummary = Object.entries(roomQuantities)
+    .filter(([_, qty]) => qty > 0)
+    .map(([id, qty]) => {
+      const room = roomCategories.find((r) => r.id === id)!;
+      return {
+        ...room,
+        quantity: qty,
+        subtotal: room.price * qty * daysCount,
+      };
+    });
+
+  const totalItemsCount = selectedSummary.reduce((acc, curr) => acc + curr.quantity, 0);
+  const totalAmount = selectedSummary.reduce((acc, curr) => acc + curr.subtotal, 0);
 
   // WhatsApp pre-filled message generator
   const getWhatsAppUrl = () => {
-    const unitLabel = selectedType === 'dormitory' ? 'Bed(s)' : 'Room(s)';
+    const branchLabel = selectedBranch === 'srinagar'
+      ? 'Srinagar Branch (Near Ramalayam Arch / Apollo Pharma)'
+      : selectedBranch === 'gajuwaka'
+      ? 'Old Gajuwaka Branch (Near 38 Bus Stop Backside)'
+      : 'Any Available Branch in Visakhapatnam';
+    
+    const itemsLines = selectedSummary.length > 0
+      ? selectedSummary.map((item) => `  • ${item.name}: ${item.quantity} × ₹${item.priceDisplay} = ₹${item.subtotal}`).join('\n')
+      : '  • No rooms selected yet';
+
+    const targetPhone = selectedBranch === 'srinagar' ? contactDetails.srinagarPhoneRaw : contactDetails.primaryPhoneRaw;
     const text = encodeURIComponent(
-      `Hello The Apple IN Lodge,\nI am interested in booking:\n• Accommodation: ${selectedRoom.name} (${selectedRoom.priceDisplay})\n• Quantity: ${roomsCount} ${unitLabel}\n• Duration: ${daysCount} Day(s)\n• Estimated Total: ₹${totalAmount}\n\nPlease confirm room availability and booking details.`
+      `Hello The Apple IN,\nI want to enquire about booking rooms:\n• Branch: ${branchLabel}\n• Stay Duration: ${daysCount} Day(s)\n• Selected Accommodations:\n${itemsLines}\n• Total Estimated Tariff: ₹${totalAmount.toLocaleString('en-IN')}\n\nPlease confirm room availability and booking details.`
     );
-    return `https://wa.me/91${contactDetails.primaryPhoneRaw}?text=${text}`;
+    return `https://wa.me/91${targetPhone}?text=${text}`;
   };
 
   return (
@@ -71,13 +133,13 @@ export const PricingCalculator: React.FC = () => {
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-orange/20 border border-brand-orange/40 text-brand-orange text-xs font-bold uppercase tracking-wider mb-2">
               <Calculator className="w-3.5 h-3.5" />
-              <span>Multi-Day Stay Calculator</span>
+              <span>Multi-Room & Multi-Category Calculator</span>
             </div>
             <h3 className="text-2xl sm:text-3xl font-extrabold font-display tracking-tight">
               Calculate Your Stay
             </h3>
             <p className="text-xs sm:text-sm text-gray-300 mt-1">
-              Select room category, quantity, and stay duration for instant estimation.
+              Select one or multiple AC, Non-AC, and dormitory rooms together for instant tariff estimation.
             </p>
           </div>
 
@@ -90,134 +152,200 @@ export const PricingCalculator: React.FC = () => {
       </div>
 
       <div className="p-6 sm:p-8 space-y-8">
-        {/* Step 1: Select Room Category */}
-        <div className="space-y-3">
+        {/* Step 1: Branch Location Selector */}
+        <div className="space-y-2">
           <label className="text-xs sm:text-sm font-bold uppercase tracking-wider text-gray-700 block">
-            1. Select Room / Accommodation Type
+            1. Select Branch Location
           </label>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
-            {roomOptions.map((opt) => {
-              const isSelected = selectedType === opt.id;
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+            <button
+              type="button"
+              onClick={() => setSelectedBranch('both')}
+              className={`p-3 rounded-xl border text-left transition-all ${
+                selectedBranch === 'both'
+                  ? 'border-brand-orange bg-orange-50/60 ring-1 ring-brand-orange shadow-xs'
+                  : 'border-gray-200 bg-white hover:border-gray-300'
+              }`}
+            >
+              <div className="text-xs font-bold text-brand-dark">Both Branches</div>
+              <div className="text-[11px] text-gray-500">Any available room in Vizag</div>
+            </button>
+            <button
+              type="button"
+              onClick={() => setSelectedBranch('gajuwaka')}
+              className={`p-3 rounded-xl border text-left transition-all ${
+                selectedBranch === 'gajuwaka'
+                  ? 'border-brand-orange bg-orange-50/60 ring-1 ring-brand-orange shadow-xs'
+                  : 'border-gray-200 bg-white hover:border-gray-300'
+              }`}
+            >
+              <div className="text-xs font-bold text-brand-dark">Old Gajuwaka Branch</div>
+              <div className="text-[11px] text-gray-500">38 Bus Stop Backside • 90594 61033</div>
+            </button>
+            <button
+              type="button"
+              onClick={() => setSelectedBranch('srinagar')}
+              className={`p-3 rounded-xl border text-left transition-all ${
+                selectedBranch === 'srinagar'
+                  ? 'border-brand-orange bg-orange-50/60 ring-1 ring-brand-orange shadow-xs'
+                  : 'border-gray-200 bg-white hover:border-gray-300'
+              }`}
+            >
+              <div className="text-xs font-bold text-brand-dark">Srinagar Branch</div>
+              <div className="text-[11px] text-gray-500">Ramalayam Arch / Apollo • 92486 96735</div>
+            </button>
+          </div>
+        </div>
+
+        {/* Step 2: Select Room Categories & Quantities (Allows picking 1 AC, 1 Non-AC, etc. simultaneously) */}
+        <div className="space-y-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+            <label className="text-xs sm:text-sm font-bold uppercase tracking-wider text-gray-700 block">
+              2. Select Rooms & Categories (Mix & Match AC, Non-AC & Beds)
+            </label>
+            <span className="text-[11px] text-gray-500 font-medium">
+              You can choose multiple room types at the same time
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5">
+            {filteredRooms.map((opt) => {
+              const qty = roomQuantities[opt.id] || 0;
+              const isSelected = qty > 0;
+
               return (
-                <button
+                <div
                   key={opt.id}
-                  type="button"
-                  onClick={() => setSelectedType(opt.id)}
-                  className={`text-left p-4 rounded-2xl border-2 transition-all relative flex flex-col justify-between ${
+                  className={`p-4 rounded-2xl border-2 transition-all relative flex flex-col justify-between ${
                     isSelected
-                      ? 'border-brand-orange bg-orange-50/50 shadow-sm'
+                      ? 'border-brand-orange bg-orange-50/40 shadow-sm'
                       : 'border-gray-200 hover:border-gray-300 bg-white'
                   }`}
                 >
-                  {opt.badge && (
-                    <span className={`absolute top-3 right-3 text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider ${
-                      isSelected ? 'bg-brand-orange text-white' : 'bg-gray-100 text-gray-600'
-                    }`}>
-                      {opt.badge}
-                    </span>
-                  )}
-                  <div>
-                    <span className="text-2xl mb-1 block">{opt.icon}</span>
-                    <h4 className="font-bold text-sm text-brand-dark">{opt.name}</h4>
-                    <p className="text-xs text-gray-500 mt-1 leading-snug">{opt.description}</p>
-                  </div>
-                  <div className="pt-3 mt-3 border-t border-gray-100 flex items-baseline justify-between">
-                    <div>
-                      <span className="text-xl font-extrabold text-brand-dark font-display">₹{opt.priceDisplay}</span>
-                      <span className="text-[11px] text-gray-500 ml-1">/{opt.unit}</span>
+                  {/* Card Header & Badge */}
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-gray-100 text-gray-700">
+                        {opt.category}
+                      </span>
+                      {opt.badge && (
+                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${
+                          isSelected ? 'bg-brand-orange text-white' : 'bg-orange-100 text-brand-orange'
+                        }`}>
+                          {opt.badge}
+                        </span>
+                      )}
                     </div>
-                    {isSelected && (
-                      <div className="w-5 h-5 rounded-full bg-brand-orange text-white flex items-center justify-center">
-                        <Check className="w-3 h-3" />
-                      </div>
-                    )}
+
+                    <h4 className="font-bold text-sm text-brand-dark pt-1 leading-snug">
+                      {opt.name}
+                    </h4>
+                    <p className="text-[11px] text-gray-500 leading-snug">
+                      {opt.description}
+                    </p>
                   </div>
-                </button>
+
+                  {/* Pricing & Interactive Quantity Counter */}
+                  <div className="pt-3 mt-3 border-t border-gray-100 space-y-3">
+                    <div className="flex items-baseline justify-between">
+                      <div>
+                        <span className="text-lg sm:text-xl font-extrabold text-brand-dark font-display">₹{opt.priceDisplay}</span>
+                        <span className="text-[10px] text-gray-500 ml-1">/{opt.unit}</span>
+                      </div>
+                      <span className="text-[10px] text-gray-400 font-medium">{opt.branch}</span>
+                    </div>
+
+                    {/* Counter Buttons */}
+                    <div className="flex items-center justify-between gap-2 pt-1">
+                      <button
+                        type="button"
+                        onClick={() => updateQuantity(opt.id, -1)}
+                        disabled={qty === 0}
+                        className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${
+                          qty > 0
+                            ? 'bg-gray-200 hover:bg-gray-300 text-brand-dark cursor-pointer'
+                            : 'bg-gray-100 text-gray-300 cursor-not-allowed'
+                        }`}
+                        aria-label={`Decrease ${opt.name}`}
+                      >
+                        <Minus className="w-3.5 h-3.5" />
+                      </button>
+
+                      <span className={`font-display font-bold text-sm px-3 py-1 rounded-lg border text-center flex-1 ${
+                        qty > 0
+                          ? 'bg-brand-orange text-white border-brand-orange'
+                          : 'bg-gray-50 text-gray-500 border-gray-200'
+                      }`}>
+                        {qty} {opt.id === 'dormitory' ? (qty === 1 ? 'Bed' : 'Beds') : (qty === 1 ? 'Room' : 'Rooms')}
+                      </span>
+
+                      <button
+                        type="button"
+                        onClick={() => updateQuantity(opt.id, 1)}
+                        className="w-8 h-8 rounded-lg bg-brand-orange hover:bg-brand-orange-hover text-white flex items-center justify-center transition-colors shadow-xs"
+                        aria-label={`Increase ${opt.name}`}
+                      >
+                        <Plus className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
               );
             })}
           </div>
         </div>
 
-        {/* Step 2: Counters for Rooms and Days */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2 border-t border-gray-100">
-          {/* Rooms / Beds Counter */}
-          <div className="space-y-3">
-            <label className="text-xs sm:text-sm font-bold uppercase tracking-wider text-gray-700 block">
-              2. Number of {selectedType === 'dormitory' ? 'Beds' : 'Rooms'}
-            </label>
-            <div className="flex items-center gap-3">
-              <button
-                type="button"
-                onClick={() => setRoomsCount(Math.max(1, roomsCount - 1))}
-                className="w-11 h-11 rounded-xl bg-gray-100 hover:bg-gray-200 text-brand-dark font-extrabold text-lg flex items-center justify-center transition-colors"
-                aria-label="Decrease quantity"
-              >
-                −
-              </button>
-              <div className="flex-1 text-center py-2.5 px-4 rounded-xl border border-gray-200 bg-gray-50 font-display font-extrabold text-xl text-brand-dark">
-                {roomsCount} {selectedType === 'dormitory' ? (roomsCount > 1 ? 'Beds' : 'Bed') : (roomsCount > 1 ? 'Rooms' : 'Room')}
-              </div>
-              <button
-                type="button"
-                onClick={() => setRoomsCount(roomsCount + 1)}
-                className="w-11 h-11 rounded-xl bg-gray-100 hover:bg-gray-200 text-brand-dark font-extrabold text-lg flex items-center justify-center transition-colors"
-                aria-label="Increase quantity"
-              >
-                +
-              </button>
-            </div>
-          </div>
-
-          {/* Days Counter */}
-          <div className="space-y-3">
-            <label className="text-xs sm:text-sm font-bold uppercase tracking-wider text-gray-700 block">
-              3. Stay Duration (Days)
-            </label>
-            <div className="flex items-center gap-3">
+        {/* Step 3: Stay Duration (Days) */}
+        <div className="space-y-3 pt-2 border-t border-gray-100">
+          <label className="text-xs sm:text-sm font-bold uppercase tracking-wider text-gray-700 block">
+            3. Stay Duration (Days)
+          </label>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+            <div className="flex items-center gap-3 w-full sm:w-72">
               <button
                 type="button"
                 onClick={() => setDaysCount(Math.max(1, daysCount - 1))}
-                className="w-11 h-11 rounded-xl bg-gray-100 hover:bg-gray-200 text-brand-dark font-extrabold text-lg flex items-center justify-center transition-colors"
+                className="w-10 h-10 rounded-xl bg-gray-100 hover:bg-gray-200 text-brand-dark font-extrabold text-lg flex items-center justify-center transition-colors"
                 aria-label="Decrease days"
               >
                 −
               </button>
-              <div className="flex-1 text-center py-2.5 px-4 rounded-xl border border-gray-200 bg-gray-50 font-display font-extrabold text-xl text-brand-dark">
+              <div className="flex-1 text-center py-2 px-4 rounded-xl border border-gray-200 bg-gray-50 font-display font-extrabold text-lg text-brand-dark">
                 {daysCount} {daysCount > 1 ? 'Days' : 'Day'}
               </div>
               <button
                 type="button"
                 onClick={() => setDaysCount(daysCount + 1)}
-                className="w-11 h-11 rounded-xl bg-gray-100 hover:bg-gray-200 text-brand-dark font-extrabold text-lg flex items-center justify-center transition-colors"
+                className="w-10 h-10 rounded-xl bg-gray-100 hover:bg-gray-200 text-brand-dark font-extrabold text-lg flex items-center justify-center transition-colors"
                 aria-label="Increase days"
               >
                 +
               </button>
             </div>
 
-            {/* Quick Duration Buttons */}
-            <div className="flex flex-wrap items-center gap-2 pt-1">
+            {/* Quick Preset Buttons */}
+            <div className="flex flex-wrap items-center gap-2">
               {[1, 2, 3, 5, 7, 15, 30].map((d) => (
                 <button
                   key={d}
                   type="button"
                   onClick={() => setDaysCount(d)}
-                  className={`text-xs px-2.5 py-1 rounded-lg border font-semibold transition-all ${
+                  className={`text-xs px-3 py-1.5 rounded-lg border font-semibold transition-all ${
                     daysCount === d
-                      ? 'bg-brand-dark text-white border-brand-dark'
+                      ? 'bg-brand-dark text-white border-brand-dark shadow-xs'
                       : 'bg-white text-gray-600 border-gray-200 hover:border-gray-300'
                   }`}
                 >
-                  {d}d
+                  {d} {d === 1 ? 'Day' : 'Days'}
                 </button>
               ))}
             </div>
           </div>
         </div>
 
-        {/* Step 3: Total Calculation & Amenities Banner */}
+        {/* Total Calculation & Action Summary */}
         <div className="p-5 sm:p-6 rounded-2xl bg-[#FAF9F6] border border-orange-100 space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-gray-200/70">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-gray-200/70">
             <div>
               <span className="text-xs uppercase font-bold tracking-wider text-gray-500 block">
                 Total Estimated Tariff
@@ -227,8 +355,27 @@ export const PricingCalculator: React.FC = () => {
                   ₹{totalAmount.toLocaleString('en-IN')}
                 </span>
                 <span className="text-xs text-gray-500 font-medium">
-                  ({roomsCount} {selectedType === 'dormitory' ? 'Bed' : 'Room'} × {daysCount} {daysCount > 1 ? 'Days' : 'Day'})
+                  ({totalItemsCount} {totalItemsCount === 1 ? 'Unit' : 'Units'} × {daysCount} {daysCount > 1 ? 'Days' : 'Day'})
                 </span>
+              </div>
+
+              {/* Breakdown Pill Tags */}
+              <div className="flex flex-wrap items-center gap-1.5 pt-2">
+                {selectedSummary.length > 0 ? (
+                  selectedSummary.map((item) => (
+                    <span
+                      key={item.id}
+                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-white border border-gray-200 text-[11px] font-medium text-gray-700 shadow-xs"
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-brand-orange" />
+                      <span>{item.quantity}× {item.name}: ₹{item.subtotal}</span>
+                    </span>
+                  ))
+                ) : (
+                  <span className="text-xs text-amber-600 font-semibold">
+                    Please select at least 1 room or bed above to calculate
+                  </span>
+                )}
               </div>
             </div>
 
@@ -244,11 +391,11 @@ export const PricingCalculator: React.FC = () => {
               </a>
 
               <a
-                href={`tel:${contactDetails.primaryPhoneRaw}`}
+                href={`tel:${selectedBranch === 'srinagar' ? contactDetails.srinagarPhoneRaw : contactDetails.primaryPhoneRaw}`}
                 className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-xs sm:text-sm font-bold text-brand-dark bg-white hover:bg-gray-100 border border-gray-300 transition-colors"
               >
                 <Phone className="w-4 h-4 text-brand-orange" />
-                <span>Call to Book</span>
+                <span>Call {selectedBranch === 'srinagar' ? 'Srinagar: 92486 96735' : 'Gajuwaka: 90594 61033'}</span>
               </a>
             </div>
           </div>
@@ -261,11 +408,11 @@ export const PricingCalculator: React.FC = () => {
             </div>
             <div className="flex items-center gap-2">
               <Clock className="w-4 h-4 text-brand-orange shrink-0" />
-              <span>24h Room Availability</span>
+              <span>24x7 Room Service & Hot Water</span>
             </div>
             <div className="flex items-center gap-2">
               <Car className="w-4 h-4 text-brand-orange shrink-0" />
-              <span>24h Available Travel</span>
+              <span>Free Parking & Travels</span>
             </div>
             <div className="flex items-center gap-2">
               <Shield className="w-4 h-4 text-brand-orange shrink-0" />
@@ -274,7 +421,7 @@ export const PricingCalculator: React.FC = () => {
           </div>
 
           <p className="text-[11px] text-gray-400 leading-snug">
-            Base indicative tariff as advertised on premises: AC ₹799, Non-AC ₹549, Dormitory ₹200 per 24 hours. Contact management for seasonal dates, government taxes (if applicable), or long-term contractor rates.
+            Base indicative tariff as advertised on premises: AC ₹799, Non-AC ₹449, Dormitory ₹200 per 24 hours. Valid across Old Gajuwaka Branch & Srinagar Branch (Hostel & Rooms). Contact management for seasonal dates, government taxes (if applicable), or long-term student/contractor rates.
           </p>
         </div>
       </div>

@@ -1,12 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, BedDouble, Wifi, Shield, CheckCircle2, ChevronRight, Phone, MapPin, Clock, Car } from 'lucide-react';
+import { ArrowRight, BedDouble, Wifi, Shield, CheckCircle2, ChevronRight, Phone, MapPin } from 'lucide-react';
 import { servicePillars, valueCards, contactDetails, accommodationRates } from '../data/content';
 import { SectionHeading } from '../components/SectionHeading';
 import { CTASection } from '../components/CTASection';
 import { HeroPillarInteractive } from '../components/HeroPillarInteractive';
 import { PricingCalculator } from '../components/PricingCalculator';
 import { RealPremisesWalkthrough } from '../components/RealPremisesWalkthrough';
+import { BranchShowcase } from '../components/BranchShowcase';
+import { OfficialFlyersShowcase } from '../components/OfficialFlyersShowcase';
 
 export const Home: React.FC = () => {
   return (
@@ -102,7 +104,7 @@ export const Home: React.FC = () => {
               <div className="flex flex-wrap items-center justify-between gap-4 text-xs text-gray-500 pt-1">
                 <div className="flex items-center gap-2">
                   <MapPin className="w-4 h-4 text-brand-orange shrink-0" />
-                  <span>Gajuwaka & Aganampudi, Visakhapatnam</span>
+                  <span>Old Gajuwaka & Srinagar Branches, Visakhapatnam</span>
                 </div>
                 <a 
                   href={`tel:${contactDetails.primaryPhoneRaw}`}
@@ -296,7 +298,7 @@ export const Home: React.FC = () => {
                       The Apple IN Lodge & Dormitory
                     </div>
                     <div className="text-sm font-semibold text-brand-dark">
-                      AC from ₹799 • Non-AC ₹549 • Dorm ₹200
+                      AC from ₹799 • Non-AC ₹449 • Dorm ₹200
                     </div>
                   </div>
                   <span className="text-[11px] font-medium text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full">
@@ -325,8 +327,8 @@ export const Home: React.FC = () => {
             align="center"
           />
 
-          {/* 3 Pricing Cards Grid with Real Photos */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+          {/* 4 Pricing Cards Grid with Real Photos */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
             {accommodationRates.map((room) => (
               <div
                 key={room.id}
@@ -337,7 +339,7 @@ export const Home: React.FC = () => {
                 }`}
               >
                 {room.badge && (
-                  <div className="absolute top-4 right-4 z-10 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-brand-orange text-white shadow-sm">
+                  <div className="absolute top-3 right-3 z-10 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-brand-orange text-white shadow-md">
                     {room.badge}
                   </div>
                 )}
@@ -350,25 +352,28 @@ export const Home: React.FC = () => {
                       alt={room.name}
                       className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                    <span className="absolute bottom-3 left-3 text-xs font-bold text-white bg-black/60 backdrop-blur-sm px-2.5 py-1 rounded-lg">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+                    <span className="absolute bottom-2.5 left-3 text-[10px] font-semibold text-white bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-md border border-white/10">
                       {room.category}
                     </span>
                   </div>
 
                   {/* Card Content */}
-                  <div className="p-6 sm:p-7 space-y-4">
+                  <div className="p-5 sm:p-6 space-y-4">
                     <div>
-                      <h3 className="text-xl font-bold font-display text-brand-dark">
+                      <div className="inline-block text-[10px] font-bold uppercase tracking-wider text-brand-orange bg-orange-50 px-2 py-0.5 rounded-full border border-orange-100 mb-1">
+                        {room.branchAvailability}
+                      </div>
+                      <h3 className="text-lg font-bold font-display text-brand-dark">
                         {room.name}
                       </h3>
-                      <p className="text-xs text-gray-500 mt-1 leading-relaxed">
+                      <p className="text-xs text-gray-500 mt-1 leading-relaxed line-clamp-2">
                         {room.description}
                       </p>
                     </div>
 
                     <div className="pt-2 pb-1 border-y border-gray-100 flex items-baseline gap-1">
-                      <span className="text-3xl sm:text-4xl font-extrabold text-brand-orange font-display">
+                      <span className="text-3xl font-extrabold text-brand-orange font-display">
                         ₹{room.priceDisplay}
                       </span>
                       <span className="text-xs text-gray-500 font-medium ml-1">
@@ -377,8 +382,8 @@ export const Home: React.FC = () => {
                     </div>
 
                     {/* Features List */}
-                    <ul className="space-y-2 pt-1">
-                      {room.features.map((feat, idx) => (
+                    <ul className="space-y-1.5 pt-1">
+                      {room.features.slice(0, 5).map((feat, idx) => (
                         <li key={idx} className="flex items-start gap-2 text-xs text-gray-700">
                           <CheckCircle2 className="w-3.5 h-3.5 text-brand-orange shrink-0 mt-0.5" />
                           <span>{feat}</span>
@@ -389,12 +394,12 @@ export const Home: React.FC = () => {
                 </div>
 
                 {/* Card Action */}
-                <div className="p-6 pt-0">
+                <div className="p-5 sm:p-6 pt-0">
                   <a
                     href={`https://wa.me/91${contactDetails.primaryPhoneRaw}?text=${encodeURIComponent(`Hi The Apple IN, I want to book ${room.name} (₹${room.priceDisplay}). Please confirm availability.`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`w-full py-3.5 rounded-xl text-xs sm:text-sm font-bold text-center flex items-center justify-center gap-2 transition-all ${
+                    className={`w-full py-3 rounded-xl text-xs sm:text-sm font-bold text-center flex items-center justify-center gap-2 transition-all ${
                       room.popular
                         ? 'bg-brand-orange hover:bg-brand-orange-hover text-white shadow-md'
                         : 'bg-brand-dark hover:bg-neutral-800 text-white'
@@ -408,59 +413,60 @@ export const Home: React.FC = () => {
             ))}
           </div>
 
-          {/* 4 Official Amenities Strip */}
-          <div className="rounded-3xl bg-white p-6 sm:p-8 border border-gray-200/90 shadow-sm">
-            <h4 className="text-base sm:text-lg font-bold font-display text-brand-dark mb-4 text-center sm:text-left">
-              Key Features & Amenities Included
-            </h4>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="p-4 rounded-2xl bg-orange-50/60 border border-orange-100 flex items-start gap-3.5">
-                <div className="w-10 h-10 rounded-xl bg-brand-orange text-white flex items-center justify-center shrink-0 shadow-xs">
-                  <Wifi className="w-5 h-5" />
-                </div>
-                <div>
-                  <h5 className="text-sm font-bold text-brand-dark">Free High-Speed Wi-Fi</h5>
-                  <p className="text-xs text-gray-600 mt-0.5">High-speed optical fiber internet across all rooms & dormitory.</p>
-                </div>
+          {/* Official 14 Amenities Banner (from Official Digital Flyer) */}
+          <div className="rounded-3xl bg-white p-6 sm:p-8 border border-gray-200/90 shadow-sm space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <span className="text-xs font-bold uppercase tracking-wider text-brand-orange block">
+                  Official Amenities & Facilities
+                </span>
+                <h4 className="text-xl sm:text-2xl font-bold font-display text-brand-dark mt-0.5">
+                  Complete Comfort for Every Guest & Resident
+                </h4>
               </div>
+              <span className="text-xs font-semibold px-3 py-1 rounded-full bg-orange-50 text-brand-orange border border-orange-200 self-start sm:self-auto">
+                14+ Certified Amenities
+              </span>
+            </div>
 
-              <div className="p-4 rounded-2xl bg-orange-50/60 border border-orange-100 flex items-start gap-3.5">
-                <div className="w-10 h-10 rounded-xl bg-brand-orange text-white flex items-center justify-center shrink-0 shadow-xs">
-                  <Clock className="w-5 h-5" />
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3 text-center">
+              {[
+                { title: "Free Wi-Fi", tag: "Fiber Speed" },
+                { title: "Free Parking", tag: "Safe Vehicle" },
+                { title: "24x7 Room Service", tag: "Front Desk" },
+                { title: "Air Conditioner", tag: "Split Cooling" },
+                { title: "Locker Facility", tag: "Personal Key" },
+                { title: "Key Amenities", tag: "Each Bed" },
+                { title: "Air Cooled", tag: "Ventilation" },
+                { title: "CCTV Security", tag: "24h Monitoring" },
+                { title: "24x7 Hot Water", tag: "Geyser Ready" },
+                { title: "Housekeeping", tag: "Daily Sanitize" },
+                { title: "Hostel Facility", tag: "Long Stay" },
+                { title: "Travels Service", tag: "Transit Help" },
+                { title: "TV Entertainment", tag: "Cable Setup" },
+                { title: "Robot Massage", tag: "Smart Lounge" },
+              ].map((amenity, idx) => (
+                <div key={idx} className="p-3 rounded-2xl bg-gray-50 border border-gray-100 hover:border-orange-200 transition-colors">
+                  <span className="text-xs font-bold text-brand-dark block">{amenity.title}</span>
+                  <span className="text-[10px] text-gray-500 block mt-0.5">{amenity.tag}</span>
                 </div>
-                <div>
-                  <h5 className="text-sm font-bold text-brand-dark">24 Hours Room Availability</h5>
-                  <p className="text-xs text-gray-600 mt-0.5">Round-the-clock check-in and room readiness at any hour.</p>
-                </div>
-              </div>
-
-              <div className="p-4 rounded-2xl bg-orange-50/60 border border-orange-100 flex items-start gap-3.5">
-                <div className="w-10 h-10 rounded-xl bg-brand-orange text-white flex items-center justify-center shrink-0 shadow-xs">
-                  <Car className="w-5 h-5" />
-                </div>
-                <div>
-                  <h5 className="text-sm font-bold text-brand-dark">24 Hours Available Travel</h5>
-                  <p className="text-xs text-gray-600 mt-0.5">Assistance with transport and direct connectivity near 38 Bus Stop.</p>
-                </div>
-              </div>
-
-              <div className="p-4 rounded-2xl bg-orange-50/60 border border-orange-100 flex items-start gap-3.5">
-                <div className="w-10 h-10 rounded-xl bg-brand-orange text-white flex items-center justify-center shrink-0 shadow-xs">
-                  <Shield className="w-5 h-5" />
-                </div>
-                <div>
-                  <h5 className="text-sm font-bold text-brand-dark">CCTV Surveillance</h5>
-                  <p className="text-xs text-gray-600 mt-0.5">HD security cameras safeguarding all corridors and entrances.</p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 
           {/* Interactive Multi-Day Pricing Calculator */}
           <PricingCalculator />
 
+          {/* Two Branches Location Showcase */}
+          <BranchShowcase />
+
           {/* Verified On-Site Photos & Interactive Walkthrough */}
           <RealPremisesWalkthrough />
+
+          {/* Official Promotional Flyers & Posters Showcase (All 5 Flyers Fully Visible) */}
+          <OfficialFlyersShowcase />
+
+          
 
         </div>
       </section>

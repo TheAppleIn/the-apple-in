@@ -12,15 +12,15 @@ export const QuickContactBar: React.FC = () => {
           className="flex flex-col items-center justify-center py-1.5 px-2 rounded-xl bg-brand-orange text-white text-xs font-semibold shadow-sm active:scale-95 transition-transform"
         >
           <Phone className="w-4 h-4 mb-0.5" />
-          <span className="text-[11px] leading-tight">Call Now</span>
+          <span className="text-[11px] leading-tight">Call Gajuwaka</span>
         </a>
 
         <a
-          href={`tel:${contactDetails.secondaryPhoneRaw}`}
-          className="flex flex-col items-center justify-center py-1.5 px-2 rounded-xl bg-gray-100 text-gray-800 text-xs font-semibold hover:bg-gray-200 active:scale-95 transition-transform"
+          href={`tel:${contactDetails.srinagarPhoneRaw}`}
+          className="flex flex-col items-center justify-center py-1.5 px-2 rounded-xl bg-orange-50 text-brand-dark border border-orange-200 text-xs font-semibold hover:bg-orange-100 active:scale-95 transition-transform"
         >
           <Phone className="w-4 h-4 text-brand-orange mb-0.5" />
-          <span className="text-[11px] leading-tight">Line 2</span>
+          <span className="text-[11px] leading-tight font-bold">Call Srinagar</span>
         </a>
 
         <Link

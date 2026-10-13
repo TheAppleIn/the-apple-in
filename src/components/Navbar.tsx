@@ -198,20 +198,20 @@ export const Navbar: React.FC = () => {
                 <Phone className="w-3.5 h-3.5" />
               </div>
               <div>
-                <div className="text-xs text-gray-500">General / Lodge</div>
+                <div className="text-xs text-gray-500">Gajuwaka Branch</div>
                 <div>{contactDetails.primaryPhone}</div>
               </div>
             </a>
             <a
-              href={`tel:${contactDetails.secondaryPhoneRaw}`}
+              href={`tel:${contactDetails.srinagarPhoneRaw}`}
               className="flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm text-gray-700 hover:bg-gray-50 font-medium"
             >
               <div className="w-7 h-7 rounded-full bg-brand-orange-light text-brand-orange flex items-center justify-center shrink-0">
                 <Phone className="w-3.5 h-3.5" />
               </div>
               <div>
-                <div className="text-xs text-gray-500">Additional Line</div>
-                <div>{contactDetails.secondaryPhone}</div>
+                <div className="text-xs text-gray-500">Srinagar Branch (Hostel & Rooms)</div>
+                <div>{contactDetails.srinagarPhone}</div>
               </div>
             </a>
           </div>

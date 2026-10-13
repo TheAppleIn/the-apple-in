@@ -14,6 +14,15 @@ interface PhotoSpotlight {
 
 const photoCollection: PhotoSpotlight[] = [
   {
+    id: 'non-ac-room',
+    title: 'Low Price Non-AC Room',
+    tag: 'Hospitality • Non-AC Room',
+    rate: '₹449',
+    image: '/images/lodge-non-ac-room-real.jpg',
+    caption: 'Verified real photograph of our low price Non-AC bedroom featuring wooden cot and headboard, comfortable mattress, study desk, wardrobe, curtains, and wall-mounted TV.',
+    specs: ['Comfortable Double Bed', 'Wardrobe & Study Desk', 'Free High-Speed Wi-Fi', 'Daily Housekeeping'],
+  },
+  {
     id: 'ac-room',
     title: 'Low Price AC Executive Bedroom',
     tag: 'Hospitality • AC Room',
@@ -23,19 +32,36 @@ const photoCollection: PhotoSpotlight[] = [
     specs: ['Individual Split AC', 'Double Bed & Clean Linens', 'Attached Bathroom', 'Free High-Speed Wi-Fi'],
   },
   {
-    id: 'non-ac-room',
-    title: 'Low Price Non-AC Room',
-    tag: 'Hospitality • Non-AC Room',
-    rate: '₹549',
-    image: '/images/lodge-non-ac-room-real.jpg',
-    caption: 'Verified real photograph of our Low Price Non-AC bedroom featuring solid wooden cot with comfortable bedding, red privacy curtains, ceiling fan, and seating table.',
-    specs: ['High-Speed Ceiling Fan', 'Comfortable Wooden Cot', 'Free High-Speed Wi-Fi', '24 Hours Room Availability'],
+    id: 'srinagar-deluxe',
+    title: 'Srinagar Branch — Deluxe Executive Room',
+    tag: 'Srinagar Branch • Deluxe AC',
+    rate: '₹799',
+    image: '/images/deluxe-suite-room.png',
+    caption: 'Verified real photograph of Srinagar branch deluxe room with emerald styling, designer floral wall, split AC, and plush king bedding.',
+    specs: ['Split Air Conditioner', 'Smart Look Design', '24x7 Room Service & Hot Water', 'Free Customer Parking'],
+  },
+  {
+    id: 'robot-massage',
+    title: 'Srinagar Branch — Robot Massage Chair Lounge',
+    tag: 'Srinagar Branch • Wellness Facility',
+    image: '/images/robot-massage.png',
+    caption: 'Exclusive automated robotic massage facility providing intelligent full-body muscle rejuvenation and relaxation for guests and residents.',
+    specs: ['Automated Full-Body Massage', 'Smart Multi-Program Settings', 'Guest Relaxation Lounge', 'Wellness Amenity'],
+  },
+  {
+    id: 'srinagar-hostel',
+    title: 'Srinagar Branch — Modern Hostel Dormitory Beds',
+    tag: 'Srinagar Branch • Hostel & Cot Beds',
+    rate: '₹200',
+    image: '/images/dormitory-srinagar-hostel.jpg',
+    caption: 'Clean, organized shared cot bed accommodations at Srinagar branch designed for budget travelers, students, and job aspirants.',
+    specs: ['Individual Sturdy Cot Beds', 'Personal Luggage Lockers', 'Key Amenities Each Bed', '24 Hours Stay: ₹200'],
   },
   {
     id: 'reception',
     title: 'Front Office Reception & Waiting Lounge',
     tag: 'Premises • Guest Lounge',
-    image: '/images/lodge-reception-lounge-real.jpg',
+    image: '/images/front-office.png',
     caption: 'Verified real photograph of The Apple IN reception lobby with crystal chandelier lighting, designer accent walls, and comfortable L-shaped cushioned seating.',
     specs: ['24 Hours Check-in Desk', 'Comfortable Guest Seating', 'CCTV Security Coverage', 'Luggage Assistance'],
   },
@@ -56,11 +82,19 @@ const photoCollection: PhotoSpotlight[] = [
     specs: ['Near 38 Bus Stop Backside', 'Muthoot Finance Landmark', '24h Travel Connectivity', 'Easy Transport Access'],
   },
   {
-    id: 'signboard',
-    title: 'Official Outdoor Brand Signboard',
+    id: 'signboard-on-site',
+    title: 'On-Site Official Outdoor Signboard',
     tag: 'Branding • Identity',
-    image: '/images/apple-in-signboard.jpg',
-    caption: 'Official outdoor branding signboard displaying "THE APPLE IN LODGE & DORMITORY", contact phone numbers 90594-61033 & 93465 61033, and official motto "Think Totally Different".',
+    image: '/images/signin-board.png',
+    caption: 'Verified on-site street photograph showing the official "The Apple IN Lodge & Dormitory" signboard installed at the Old Gajuwaka property.',
+    specs: ['Physical Signboard', 'Phone: 90594 61033', 'Phone: 93465 61033', 'Verified Location'],
+  },
+  {
+    id: 'signboard-banner',
+    title: 'Official Outdoor Brand Billboard',
+    tag: 'Branding • Identity',
+    image: '/images/apple-inn-banner-wide.png',
+    caption: 'Official outdoor branding billboard displaying "THE APPLE IN LODGE & DORMITORY", contact phone numbers 90594-61033 & 93465 61033, and official motto "Think Totally Different".',
     specs: ['The Apple IN Logo', 'Phone: 90594 61033', 'Phone: 93465 61033', 'Full Postal Address'],
   },
 ];
@@ -114,35 +148,35 @@ export const RealPremisesWalkthrough: React.FC = () => {
         </div>
 
         {/* Main Featured Photo Viewer */}
-        <div className="relative aspect-[16/10] sm:aspect-[16/9] rounded-2xl overflow-hidden bg-neutral-900 border border-gray-200 shadow-inner group">
+        <div className="relative aspect-[16/10] sm:aspect-[16/9] rounded-2xl overflow-hidden bg-neutral-900 border border-gray-200 shadow-inner group flex items-center justify-center">
           <img
             key={activePhoto.id}
             src={activePhoto.image}
             alt={activePhoto.title}
             className="w-full h-full object-cover transition-all duration-500 animate-in fade-in"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-black/25 pointer-events-none" />
 
           {/* Top Overlays */}
-          <div className="absolute top-4 left-4 right-4 flex items-center justify-between gap-2">
-            <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider text-white bg-black/60 backdrop-blur-md border border-white/20">
+          <div className="absolute top-3 left-3 right-3 sm:top-4 sm:left-4 sm:right-4 flex items-center justify-between gap-2 z-10">
+            <span className="px-2.5 py-1 sm:px-3 sm:py-1 rounded-full text-[10px] sm:text-xs font-bold uppercase tracking-wider text-white bg-black/60 backdrop-blur-md border border-white/20">
               {activePhoto.tag}
             </span>
 
             <div className="flex items-center gap-2">
               {activePhoto.rate && (
-                <span className="px-3 py-1 rounded-full text-xs font-extrabold text-white bg-brand-orange shadow-sm">
+                <span className="px-2.5 py-1 sm:px-3 sm:py-1 rounded-full text-[11px] sm:text-xs font-extrabold text-white bg-brand-orange shadow-sm">
                   {activePhoto.rate}
                 </span>
               )}
               <button
                 type="button"
                 onClick={() => setIsLightboxOpen(true)}
-                className="p-2 rounded-full bg-black/60 hover:bg-black/80 text-white backdrop-blur-md transition-colors"
+                className="p-1.5 sm:p-2 rounded-full bg-black/60 hover:bg-black/90 text-white backdrop-blur-md transition-colors"
                 title="View full resolution photo"
                 aria-label="Enlarge image"
               >
-                <Maximize2 className="w-4 h-4" />
+                <Maximize2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </button>
             </div>
           </div>
@@ -151,47 +185,47 @@ export const RealPremisesWalkthrough: React.FC = () => {
           <button
             type="button"
             onClick={handlePrev}
-            className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-black/50 hover:bg-brand-orange text-white flex items-center justify-center backdrop-blur-md transition-all opacity-80 hover:opacity-100 hover:scale-105"
+            className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-black/55 hover:bg-brand-orange text-white flex items-center justify-center backdrop-blur-md transition-all opacity-85 hover:opacity-100 hover:scale-105 z-10"
             aria-label="Previous photo"
           >
-            <ChevronLeft className="w-6 h-6" />
+            <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
 
           <button
             type="button"
             onClick={handleNext}
-            className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-11 sm:h-11 rounded-full bg-black/50 hover:bg-brand-orange text-white flex items-center justify-center backdrop-blur-md transition-all opacity-80 hover:opacity-100 hover:scale-105"
+            className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-black/55 hover:bg-brand-orange text-white flex items-center justify-center backdrop-blur-md transition-all opacity-85 hover:opacity-100 hover:scale-105 z-10"
             aria-label="Next photo"
           >
-            <ChevronRight className="w-6 h-6" />
+            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
           </button>
 
           {/* Bottom Caption & Action Strip */}
-          <div className="absolute bottom-4 left-4 right-4 text-white space-y-2">
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+          <div className="absolute bottom-2 left-2 right-2 sm:bottom-4 sm:left-4 sm:right-4 text-white z-10">
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2.5 bg-black/55 sm:bg-transparent backdrop-blur-sm sm:backdrop-blur-none p-3 sm:p-0 rounded-xl">
               <div>
-                <h4 className="text-lg sm:text-xl font-bold font-display drop-shadow">
+                <h4 className="text-sm sm:text-lg md:text-xl font-bold font-display drop-shadow">
                   {activePhoto.title}
                 </h4>
-                <p className="text-xs sm:text-sm text-gray-200 mt-1 max-w-2xl line-clamp-2 drop-shadow">
+                <p className="text-[11px] sm:text-xs md:text-sm text-gray-200 mt-0.5 max-w-2xl line-clamp-1 sm:line-clamp-2 drop-shadow">
                   {activePhoto.caption}
                 </p>
               </div>
 
-              <div className="flex items-center gap-2 shrink-0">
+              <div className="flex items-center gap-2 shrink-0 pt-1 sm:pt-0">
                 <a
                   href={getWhatsAppBookingUrl(activePhoto)}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold text-white bg-[#25D366] hover:bg-[#20bd5a] shadow-sm transition-all"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold text-white bg-[#25D366] hover:bg-[#20bd5a] shadow-sm transition-all"
                 >
                   <MessageSquare className="w-3.5 h-3.5" />
-                  <span>WhatsApp Desk</span>
+                  <span>WhatsApp</span>
                 </a>
 
                 <a
                   href={`tel:${contactDetails.primaryPhoneRaw}`}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold text-brand-dark bg-white hover:bg-gray-100 transition-colors"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-[11px] sm:text-xs font-bold text-brand-dark bg-white hover:bg-gray-100 transition-colors shadow-sm"
                 >
                   <Phone className="w-3.5 h-3.5 text-brand-orange" />
                   <span>Call to Book</span>
@@ -201,8 +235,8 @@ export const RealPremisesWalkthrough: React.FC = () => {
           </div>
         </div>
 
-        {/* Thumbnail Selector Strip */}
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 pt-2">
+        {/* Thumbnail Selector Strip — Clear vibrant previews */}
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-3 pt-2">
           {photoCollection.map((photo, idx) => {
             const isSelected = activeIndex === idx;
             return (
@@ -210,22 +244,22 @@ export const RealPremisesWalkthrough: React.FC = () => {
                 key={photo.id}
                 type="button"
                 onClick={() => setActiveIndex(idx)}
-                className={`p-2 rounded-2xl border text-left transition-all relative ${
+                className={`p-1.5 sm:p-2 rounded-2xl border text-left transition-all relative ${
                   isSelected
-                    ? 'border-brand-orange bg-orange-50/70 shadow-sm ring-1 ring-brand-orange/40'
+                    ? 'border-brand-orange bg-orange-50/70 shadow-sm ring-2 ring-brand-orange/40'
                     : 'border-gray-200 hover:border-gray-300 bg-gray-50/60'
                 }`}
               >
-                <div className="relative aspect-[16/10] rounded-xl overflow-hidden mb-2 bg-gray-200">
+                <div className="relative aspect-[16/10] rounded-xl overflow-hidden mb-1.5 bg-gray-200 flex items-center justify-center">
                   <img src={photo.image} alt={photo.title} className="w-full h-full object-cover" />
                   {photo.rate && (
-                    <span className="absolute bottom-1 right-1 text-[10px] font-bold px-1.5 py-0.5 rounded bg-brand-orange text-white">
+                    <span className="absolute bottom-1 right-1 text-[9px] sm:text-[10px] font-bold px-1.5 py-0.5 rounded bg-brand-orange text-white shadow-sm">
                       {photo.rate}
                     </span>
                   )}
                 </div>
-                <h5 className="text-xs font-bold text-brand-dark line-clamp-1">{photo.title}</h5>
-                <span className="text-[10px] text-gray-500 block truncate">Photo 0{idx + 1}</span>
+                <h5 className="text-[11px] sm:text-xs font-bold text-brand-dark line-clamp-1">{photo.title}</h5>
+                <span className="text-[9px] sm:text-[10px] text-gray-500 block truncate">Photo 0{idx + 1}</span>
               </button>
             );
           })}

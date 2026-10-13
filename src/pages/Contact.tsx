@@ -2,6 +2,7 @@ import React from 'react';
 import { PageHero } from '../components/PageHero';
 import { SectionHeading } from '../components/SectionHeading';
 import { ContactForm } from '../components/ContactForm';
+import { BranchShowcase } from '../components/BranchShowcase';
 import { contactDetails } from '../data/content';
 import {
   Phone,
@@ -10,6 +11,7 @@ import {
   Clock,
   Instagram,
   Facebook,
+  ExternalLink,
 } from 'lucide-react';
 
 export const Contact: React.FC = () => {
@@ -60,7 +62,7 @@ export const Contact: React.FC = () => {
                     className="flex items-center justify-between p-3 rounded-xl bg-gray-50 hover:bg-orange-50/50 border border-gray-100 transition-colors group"
                   >
                     <div>
-                      <div className="text-xs text-gray-500 font-medium">Lodge / General Contact</div>
+                      <div className="text-xs text-gray-500 font-medium">Branch 1: Old Gajuwaka Main Lodge</div>
                       <div className="text-base font-bold text-brand-dark group-hover:text-brand-orange transition-colors">
                         +91 {contactDetails.primaryPhone}
                       </div>
@@ -71,11 +73,28 @@ export const Contact: React.FC = () => {
                   </a>
 
                   <a
+                    href={`tel:${contactDetails.srinagarPhoneRaw}`}
+                    className="flex items-center justify-between p-3 rounded-xl bg-orange-50/40 hover:bg-orange-50 border border-orange-200/60 transition-colors group"
+                  >
+                    <div>
+                      <div className="text-xs text-brand-orange font-bold flex items-center gap-1">
+                        <span>Branch 2: Srinagar Hostel & Rooms</span>
+                      </div>
+                      <div className="text-base font-bold text-brand-dark group-hover:text-brand-orange transition-colors">
+                        +91 {contactDetails.srinagarPhone}
+                      </div>
+                    </div>
+                    <span className="text-xs font-semibold text-white bg-brand-orange px-3 py-1 rounded-full shadow-xs">
+                      Call
+                    </span>
+                  </a>
+
+                  <a
                     href={`tel:${contactDetails.secondaryPhoneRaw}`}
                     className="flex items-center justify-between p-3 rounded-xl bg-gray-50 hover:bg-orange-50/50 border border-gray-100 transition-colors group"
                   >
                     <div>
-                      <div className="text-xs text-gray-500 font-medium">Additional Contact Line</div>
+                      <div className="text-xs text-gray-500 font-medium">Internet & CCTV Operations (Aganampudi)</div>
                       <div className="text-base font-bold text-brand-dark group-hover:text-brand-orange transition-colors">
                         +91 {contactDetails.secondaryPhone}
                       </div>
@@ -85,22 +104,20 @@ export const Contact: React.FC = () => {
                     </span>
                   </a>
 
-                  {contactDetails.managerPhone && (
-                    <a
-                      href={`tel:${contactDetails.managerPhoneRaw}`}
-                      className="flex items-center justify-between p-3 rounded-xl bg-gray-50 hover:bg-orange-50/50 border border-gray-100 transition-colors group"
-                    >
-                      <div>
-                        <div className="text-xs text-gray-500 font-medium">Management ({contactDetails.managerName})</div>
-                        <div className="text-base font-bold text-brand-dark group-hover:text-brand-orange transition-colors">
-                          +91 {contactDetails.managerPhone}
-                        </div>
+                  <a
+                    href={`tel:${contactDetails.managerPhoneRaw}`}
+                    className="flex items-center justify-between p-3 rounded-xl bg-gray-50 hover:bg-orange-50/50 border border-gray-100 transition-colors group"
+                  >
+                    <div>
+                      <div className="text-xs text-gray-500 font-medium">Alternate / Manager Line ({contactDetails.managerName})</div>
+                      <div className="text-base font-bold text-brand-dark group-hover:text-brand-orange transition-colors">
+                        +91 {contactDetails.managerPhone}
                       </div>
-                      <span className="text-xs font-semibold text-brand-orange bg-white px-3 py-1 rounded-full border border-gray-200">
-                        Call
-                      </span>
-                    </a>
-                  )}
+                    </div>
+                    <span className="text-xs font-semibold text-brand-orange bg-white px-3 py-1 rounded-full border border-gray-200">
+                      Call
+                    </span>
+                  </a>
                 </div>
               </div>
 
@@ -145,51 +162,111 @@ export const Contact: React.FC = () => {
                   </div>
                   <div>
                     <h3 className="text-base font-bold font-display text-brand-dark">
-                      Office & Location Details
+                      Locations & Map Directions
                     </h3>
-                    <p className="text-xs text-gray-500">Visakhapatnam, Andhra Pradesh</p>
+                    <p className="text-xs text-gray-500">3 Verified Centers Across Visakhapatnam</p>
                   </div>
                 </div>
 
-                <div className="space-y-3 pt-1 text-sm text-gray-700">
-                  <div className="p-3.5 rounded-xl bg-gray-50 border border-gray-100 space-y-1">
-                    <span className="text-xs font-bold uppercase tracking-wider text-brand-orange block">
-                      Primary Location
-                    </span>
-                    <address className="not-italic leading-relaxed text-xs sm:text-sm">
-                      <strong>{contactDetails.primaryAddress.line1}</strong>,<br />
-                      {contactDetails.primaryAddress.area},<br />
-                      {contactDetails.primaryAddress.cityStateZip}<br />
-                      <span className="text-gray-500 text-xs mt-1 block">
-                        Landmark: {contactDetails.primaryAddress.landmark}
+                <div className="space-y-3.5 pt-1 text-sm text-gray-700">
+                  {/* Branch 1 */}
+                  <div className="p-4 rounded-xl bg-orange-50/50 border border-orange-200/80 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold uppercase tracking-wider text-brand-orange block">
+                        Branch 1: Old Gajuwaka (Apple Lodge)
                       </span>
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-brand-orange text-white">
+                        Flagship
+                      </span>
+                    </div>
+                    <address className="not-italic leading-relaxed text-xs sm:text-sm text-gray-800">
+                      <strong>{contactDetails.cardAddress.line1}</strong>,<br />
+                      {contactDetails.cardAddress.area},<br />
+                      {contactDetails.cardAddress.cityStateZip}
                     </address>
+                    <div className="text-xs text-brand-orange font-semibold">
+                      Landmark: {contactDetails.cardAddress.landmark}
+                    </div>
+                    <div className="text-xs text-gray-600 font-medium">
+                      Phone: +91 {contactDetails.primaryPhone} / {contactDetails.managerPhone}
+                    </div>
+                    <a
+                      href={contactDetails.gajuwakaMapUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white hover:bg-orange-100 text-xs font-bold text-brand-orange border border-orange-200 transition-colors shadow-xs mt-1"
+                    >
+                      <MapPin className="w-3.5 h-3.5" />
+                      <span>View on Google Maps</span>
+                      <ExternalLink className="w-3 h-3 text-gray-400" />
+                    </a>
                   </div>
 
-                  {contactDetails.cardAddress && (
-                    <div className="p-4 rounded-xl bg-orange-50/50 border border-orange-200/80 space-y-2">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold uppercase tracking-wider text-brand-orange block">
-                          Lodge & Signboard Location
-                        </span>
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-brand-orange text-white">
-                          Old Gajuwaka
-                        </span>
-                      </div>
-                      <address className="not-italic leading-relaxed text-xs sm:text-sm text-gray-800">
-                        <strong>{contactDetails.cardAddress.line1}</strong>,<br />
-                        {contactDetails.cardAddress.area},<br />
-                        {contactDetails.cardAddress.cityStateZip}
-                      </address>
-                      <div className="pt-2">
-                        <img
-                          src="/images/apple-in-signboard.jpg"
-                          alt="The Apple IN official signboard at 38 Bus Stop Backside Old Gajuwaka"
-                          className="w-full rounded-lg border border-orange-200 object-cover aspect-[16/9]"
-                        />
-                      </div>
+                  {/* Branch 2 */}
+                  <div className="p-4 rounded-xl bg-orange-50/50 border border-orange-200/80 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold uppercase tracking-wider text-brand-orange block">
+                        Branch 2: Srinagar (Hostel & Rooms)
+                      </span>
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-green-600 text-white">
+                        New Smart Look
+                      </span>
                     </div>
-                  )}
+                    <address className="not-italic leading-relaxed text-xs sm:text-sm text-gray-800">
+                      <strong>{contactDetails.srinagarAddress.line1}</strong>,<br />
+                      {contactDetails.srinagarAddress.area},<br />
+                      {contactDetails.srinagarAddress.cityStateZip}
+                    </address>
+                    <div className="text-xs text-brand-orange font-semibold">
+                      Landmark: {contactDetails.srinagarAddress.landmark}
+                    </div>
+                    <div className="text-xs text-gray-600 font-medium">
+                      Direct Srinagar Phone: +91 {contactDetails.srinagarPhone}
+                    </div>
+                    <a
+                      href={contactDetails.srinagarMapUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white hover:bg-orange-100 text-xs font-bold text-brand-orange border border-orange-200 transition-colors shadow-xs mt-1"
+                    >
+                      <MapPin className="w-3.5 h-3.5" />
+                      <span>View on Google Maps</span>
+                      <ExternalLink className="w-3 h-3 text-gray-400" />
+                    </a>
+                  </div>
+
+                  {/* Tech Hub Aganampudi */}
+                  <div className="p-4 rounded-xl bg-blue-50/50 border border-blue-200/80 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold uppercase tracking-wider text-blue-700 block">
+                        Internet & CCTV Hub: Aganampudi
+                      </span>
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-600 text-white">
+                        ISP & CCTV
+                      </span>
+                    </div>
+                    <address className="not-italic leading-relaxed text-xs sm:text-sm text-gray-800">
+                      <strong>{contactDetails.primaryAddress.line1}</strong>,<br />
+                      {contactDetails.primaryAddress.area},<br />
+                      {contactDetails.primaryAddress.cityStateZip}
+                    </address>
+                    <div className="text-xs text-blue-700 font-semibold">
+                      Landmark: {contactDetails.primaryAddress.landmark}
+                    </div>
+                    <div className="text-xs text-gray-600 font-medium">
+                      ISP & CCTV Direct Line: +91 {contactDetails.secondaryPhone}
+                    </div>
+                    <a
+                      href={contactDetails.aganampudiMapUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white hover:bg-blue-100 text-xs font-bold text-blue-700 border border-blue-200 transition-colors shadow-xs mt-1"
+                    >
+                      <MapPin className="w-3.5 h-3.5" />
+                      <span>View on Google Maps</span>
+                      <ExternalLink className="w-3 h-3 text-gray-400" />
+                    </a>
+                  </div>
                 </div>
               </div>
 
@@ -243,6 +320,15 @@ export const Contact: React.FC = () => {
             </div>
 
           </div>
+
+          {/* Dedicated Two Branches Location Map / Showcase */}
+          <div className="mt-20 pt-16 border-t border-gray-200">
+            <BranchShowcase
+              title="Visit Either of Our Visakhapatnam Locations"
+              subtitle="The Apple IN operates two convenient branches with dedicated management, verified clean rooms, and 24x7 guest assistance."
+            />
+          </div>
+
         </div>
       </section>
     </div>
