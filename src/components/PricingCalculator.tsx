@@ -1,62 +1,62 @@
 import React, { useState } from 'react';
-import { Wifi, Clock, Car, Shield, Phone, MessageSquare, Calculator, Plus, Minus } from 'lucide-react';
+import { Phone, MessageSquare, Calculator, Plus, Minus, Check } from 'lucide-react';
 import { contactDetails } from '../data/content';
 
 export interface RoomOptionItem {
   id: string;
   name: string;
+  shortName: string;
   category: string;
   price: number;
   priceDisplay: string;
   unit: string;
   badge?: string;
-  description: string;
   branch: string;
 }
 
 export const roomCategories: RoomOptionItem[] = [
   {
-    id: 'ac',
-    name: 'Low Price AC Room',
-    category: 'Executive AC',
-    price: 799,
-    priceDisplay: '799',
-    unit: 'room / 24 hrs',
-    badge: 'Popular',
-    description: 'Private bedroom with individual split AC, clean double bed & attached bathroom',
+    id: 'non-ac',
+    name: 'Non-AC Room',
+    shortName: 'Non-AC Room',
+    category: 'Non-AC Standard',
+    price: 449,
+    priceDisplay: '449',
+    unit: 'room',
+    badge: '₹449 Offer',
     branch: 'Gajuwaka & Srinagar',
   },
   {
-    id: 'non-ac',
-    name: 'Low Price Non-AC Room',
-    category: 'Standard Non-AC',
-    price: 449,
-    priceDisplay: '449',
-    unit: 'room / 24 hrs',
-    badge: 'Special Offer',
-    description: 'Well-ventilated bedroom with high-speed ceiling fan, fresh bedding & daily housekeeping',
+    id: 'ac',
+    name: 'AC Room',
+    shortName: 'AC Room',
+    category: 'Executive AC',
+    price: 799,
+    priceDisplay: '799',
+    unit: 'room',
+    badge: 'Popular',
     branch: 'Gajuwaka & Srinagar',
   },
   {
     id: 'dormitory',
-    name: 'Dormitory & Hostel Beds',
-    category: 'Shared Hostel',
+    name: 'Dormitory & Hostel Bed',
+    shortName: 'Hostel Bed',
+    category: 'Shared Cot Bed',
     price: 200,
     priceDisplay: '200',
-    unit: 'bed / 24 hrs',
+    unit: 'bed',
     badge: 'Best Value',
-    description: 'Shared cot bed accommodation with private luggage lockers and key amenities',
     branch: 'Gajuwaka & Srinagar',
   },
   {
     id: 'deluxe',
     name: 'Deluxe & Suite Rooms',
+    shortName: 'Deluxe Room',
     category: 'Smart Look',
     price: 799,
     priceDisplay: '799',
-    unit: 'room / 24 hrs',
+    unit: 'room',
     badge: 'Smart Look',
-    description: 'Modern room with elegant decor, split AC, waiting lobby & robot massage access',
     branch: 'Srinagar Branch',
   },
 ];
@@ -64,17 +64,16 @@ export const roomCategories: RoomOptionItem[] = [
 export const PricingCalculator: React.FC = () => {
   const [selectedBranch, setSelectedBranch] = useState<'both' | 'gajuwaka' | 'srinagar'>('both');
   
-  // Multi-room selections state: map of roomId -> quantity
+  // Multi-room quantities state
   const [roomQuantities, setRoomQuantities] = useState<Record<string, number>>({
-    'ac': 1,
-    'non-ac': 0,
+    'non-ac': 1,
+    'ac': 0,
     'dormitory': 0,
     'deluxe': 0,
   });
 
   const [daysCount, setDaysCount] = useState<number>(1);
 
-  // Update room quantity
   const updateQuantity = (id: string, delta: number) => {
     setRoomQuantities((prev) => {
       const current = prev[id] || 0;
@@ -83,15 +82,13 @@ export const PricingCalculator: React.FC = () => {
     });
   };
 
-  // Filter rooms based on selected branch
   const filteredRooms = roomCategories.filter((r) => {
     if (selectedBranch === 'gajuwaka') {
-      return r.id !== 'deluxe'; // Deluxe is primarily Srinagar exclusive
+      return r.id !== 'deluxe';
     }
     return true;
   });
 
-  // Calculate totals across all selected room types
   const selectedSummary = Object.entries(roomQuantities)
     .filter(([_, qty]) => qty > 0)
     .map(([id, qty]) => {
@@ -106,109 +103,91 @@ export const PricingCalculator: React.FC = () => {
   const totalItemsCount = selectedSummary.reduce((acc, curr) => acc + curr.quantity, 0);
   const totalAmount = selectedSummary.reduce((acc, curr) => acc + curr.subtotal, 0);
 
-  // WhatsApp pre-filled message generator
   const getWhatsAppUrl = () => {
     const branchLabel = selectedBranch === 'srinagar'
-      ? 'Srinagar Branch (Near Ramalayam Arch / Apollo Pharma)'
+      ? 'Srinagar Branch (Near Ramalayam Arch / Apollo)'
       : selectedBranch === 'gajuwaka'
-      ? 'Old Gajuwaka Branch (Near 38 Bus Stop Backside)'
-      : 'Any Available Branch in Visakhapatnam';
+      ? 'Old Gajuwaka Branch (38 Bus Stop Backside)'
+      : 'Any Available Branch in Vizag';
     
     const itemsLines = selectedSummary.length > 0
       ? selectedSummary.map((item) => `  • ${item.name}: ${item.quantity} × ₹${item.priceDisplay} = ₹${item.subtotal}`).join('\n')
-      : '  • No rooms selected yet';
+      : '  • 1 Room Enquired';
 
     const targetPhone = selectedBranch === 'srinagar' ? contactDetails.srinagarPhoneRaw : contactDetails.primaryPhoneRaw;
     const text = encodeURIComponent(
-      `Hello The Apple IN,\nI want to enquire about booking rooms:\n• Branch: ${branchLabel}\n• Stay Duration: ${daysCount} Day(s)\n• Selected Accommodations:\n${itemsLines}\n• Total Estimated Tariff: ₹${totalAmount.toLocaleString('en-IN')}\n\nPlease confirm room availability and booking details.`
+      `Hello The Apple IN,\nI would like to check availability and book:\n• Branch: ${branchLabel}\n• Stay: ${daysCount} Day(s)\n• Rooms / Beds:\n${itemsLines}\n• Estimated Total: ₹${totalAmount.toLocaleString('en-IN')}\n\nPlease confirm availability.`
     );
     return `https://wa.me/91${targetPhone}?text=${text}`;
   };
 
   return (
-    <div className="bg-white rounded-3xl border border-gray-200/90 shadow-xl overflow-hidden">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-brand-dark to-neutral-900 text-white p-6 sm:p-8">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div className="bg-white rounded-2xl sm:rounded-3xl border border-gray-200/90 shadow-md sm:shadow-xl overflow-hidden">
+      {/* Header - Simple & Clean */}
+      <div className="bg-gradient-to-r from-brand-dark to-neutral-900 text-white p-4 sm:p-7">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-orange/20 border border-brand-orange/40 text-brand-orange text-xs font-bold uppercase tracking-wider mb-2">
-              <Calculator className="w-3.5 h-3.5" />
-              <span>Multi-Room & Multi-Category Calculator</span>
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-orange/20 border border-brand-orange/40 text-brand-orange text-[11px] font-bold uppercase tracking-wider mb-1.5">
+              <Calculator className="w-3 h-3" />
+              <span>Easy Stay Calculator</span>
             </div>
-            <h3 className="text-2xl sm:text-3xl font-extrabold font-display tracking-tight">
+            <h3 className="text-xl sm:text-2xl font-extrabold font-display tracking-tight text-white">
               Calculate Your Stay
             </h3>
-            <p className="text-xs sm:text-sm text-gray-300 mt-1">
-              Select one or multiple AC, Non-AC, and dormitory rooms together for instant tariff estimation.
+            <p className="text-xs sm:text-sm text-gray-300 mt-0.5">
+              Select your rooms & days for instant price estimation.
             </p>
           </div>
 
-          <div className="text-left sm:text-right">
-            <span className="text-xs text-gray-400 block">Starting from</span>
-            <span className="text-3xl sm:text-4xl font-extrabold text-brand-orange font-display">₹200</span>
-            <span className="text-xs text-gray-300 block">per bed (24 Hours)</span>
+          <div className="flex items-center sm:flex-col sm:items-end justify-between sm:justify-center pt-2 sm:pt-0 border-t sm:border-t-0 border-white/10">
+            <span className="text-xs text-gray-400">Starting from</span>
+            <div className="flex items-baseline gap-1">
+              <span className="text-2xl sm:text-3xl font-extrabold text-brand-orange font-display">₹200</span>
+              <span className="text-[11px] text-gray-300">/ 24 hrs</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="p-6 sm:p-8 space-y-8">
-        {/* Step 1: Branch Location Selector */}
+      <div className="p-4 sm:p-6 lg:p-8 space-y-5 sm:space-y-7">
+        {/* Step 1: Branch Location */}
         <div className="space-y-2">
-          <label className="text-xs sm:text-sm font-bold uppercase tracking-wider text-gray-700 block">
-            1. Select Branch Location
+          <label className="text-xs font-bold uppercase tracking-wider text-gray-700 block">
+            1. Select Branch
           </label>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-            <button
-              type="button"
-              onClick={() => setSelectedBranch('both')}
-              className={`p-3 rounded-xl border text-left transition-all ${
-                selectedBranch === 'both'
-                  ? 'border-brand-orange bg-orange-50/60 ring-1 ring-brand-orange shadow-xs'
-                  : 'border-gray-200 bg-white hover:border-gray-300'
-              }`}
-            >
-              <div className="text-xs font-bold text-brand-dark">Both Branches</div>
-              <div className="text-[11px] text-gray-500">Any available room in Vizag</div>
-            </button>
-            <button
-              type="button"
-              onClick={() => setSelectedBranch('gajuwaka')}
-              className={`p-3 rounded-xl border text-left transition-all ${
-                selectedBranch === 'gajuwaka'
-                  ? 'border-brand-orange bg-orange-50/60 ring-1 ring-brand-orange shadow-xs'
-                  : 'border-gray-200 bg-white hover:border-gray-300'
-              }`}
-            >
-              <div className="text-xs font-bold text-brand-dark">Old Gajuwaka Branch</div>
-              <div className="text-[11px] text-gray-500">38 Bus Stop Backside • 90594 61033</div>
-            </button>
-            <button
-              type="button"
-              onClick={() => setSelectedBranch('srinagar')}
-              className={`p-3 rounded-xl border text-left transition-all ${
-                selectedBranch === 'srinagar'
-                  ? 'border-brand-orange bg-orange-50/60 ring-1 ring-brand-orange shadow-xs'
-                  : 'border-gray-200 bg-white hover:border-gray-300'
-              }`}
-            >
-              <div className="text-xs font-bold text-brand-dark">Srinagar Branch</div>
-              <div className="text-[11px] text-gray-500">Ramalayam Arch / Apollo • 92486 96735</div>
-            </button>
+          <div className="grid grid-cols-3 gap-2">
+            {[
+              { id: 'both', title: 'Any Branch', sub: 'Vizag' },
+              { id: 'gajuwaka', title: 'Old Gajuwaka', sub: 'Bus Stop Back' },
+              { id: 'srinagar', title: 'Srinagar', sub: 'Ramalayam' },
+            ].map((b) => (
+              <button
+                key={b.id}
+                type="button"
+                onClick={() => setSelectedBranch(b.id as any)}
+                className={`py-2 px-1.5 sm:py-2.5 sm:px-3 rounded-xl border text-center transition-all ${
+                  selectedBranch === b.id
+                    ? 'border-brand-orange bg-orange-50/80 text-brand-orange ring-1 ring-brand-orange font-bold shadow-xs'
+                    : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300 font-medium'
+                }`}
+              >
+                <div className="text-xs leading-tight font-bold truncate">{b.title}</div>
+                <div className="text-[10px] text-gray-500 mt-0.5 hidden sm:block">{b.sub}</div>
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* Step 2: Select Room Categories & Quantities (Allows picking 1 AC, 1 Non-AC, etc. simultaneously) */}
-        <div className="space-y-3">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-            <label className="text-xs sm:text-sm font-bold uppercase tracking-wider text-gray-700 block">
-              2. Select Rooms & Categories (Mix & Match AC, Non-AC & Beds)
+        {/* Step 2: Select Rooms & Quantities - Mobile Simplified Card Rows */}
+        <div className="space-y-2.5">
+          <div className="flex items-center justify-between">
+            <label className="text-xs font-bold uppercase tracking-wider text-gray-700 block">
+              2. Choose Rooms / Beds
             </label>
-            <span className="text-[11px] text-gray-500 font-medium">
-              You can choose multiple room types at the same time
-            </span>
+            <span className="text-[11px] text-gray-500">Tap + or - to select</span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3.5">
             {filteredRooms.map((opt) => {
               const qty = roomQuantities[opt.id] || 0;
               const isSelected = qty > 0;
@@ -216,78 +195,65 @@ export const PricingCalculator: React.FC = () => {
               return (
                 <div
                   key={opt.id}
-                  className={`p-4 rounded-2xl border-2 transition-all relative flex flex-col justify-between ${
+                  className={`p-3 sm:p-4 rounded-xl sm:rounded-2xl border transition-all flex sm:flex-col justify-between items-center sm:items-stretch gap-3 ${
                     isSelected
-                      ? 'border-brand-orange bg-orange-50/40 shadow-sm'
-                      : 'border-gray-200 hover:border-gray-300 bg-white'
+                      ? 'border-brand-orange bg-orange-50/40 shadow-xs'
+                      : 'border-gray-200 bg-white hover:border-gray-300'
                   }`}
                 >
-                  {/* Card Header & Badge */}
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-gray-100 text-gray-700">
+                  {/* Left: Info */}
+                  <div className="flex-1 min-w-0 space-y-0.5 sm:space-y-1">
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-gray-100 text-gray-600">
                         {opt.category}
                       </span>
                       {opt.badge && (
-                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${
-                          isSelected ? 'bg-brand-orange text-white' : 'bg-orange-100 text-brand-orange'
-                        }`}>
+                        <span className="text-[10px] font-bold px-1.5 py-0.2 rounded bg-orange-100 text-brand-orange">
                           {opt.badge}
                         </span>
                       )}
                     </div>
-
-                    <h4 className="font-bold text-sm text-brand-dark pt-1 leading-snug">
+                    <h4 className="font-bold text-xs sm:text-sm text-brand-dark truncate sm:whitespace-normal">
                       {opt.name}
                     </h4>
-                    <p className="text-[11px] text-gray-500 leading-snug">
-                      {opt.description}
-                    </p>
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-sm sm:text-base font-extrabold text-brand-dark font-display">
+                        ₹{opt.priceDisplay}
+                      </span>
+                      <span className="text-[10px] text-gray-500">/{opt.unit}</span>
+                    </div>
                   </div>
 
-                  {/* Pricing & Interactive Quantity Counter */}
-                  <div className="pt-3 mt-3 border-t border-gray-100 space-y-3">
-                    <div className="flex items-baseline justify-between">
-                      <div>
-                        <span className="text-lg sm:text-xl font-extrabold text-brand-dark font-display">₹{opt.priceDisplay}</span>
-                        <span className="text-[10px] text-gray-500 ml-1">/{opt.unit}</span>
-                      </div>
-                      <span className="text-[10px] text-gray-400 font-medium">{opt.branch}</span>
-                    </div>
-
-                    {/* Counter Buttons */}
-                    <div className="flex items-center justify-between gap-2 pt-1">
-                      <button
-                        type="button"
-                        onClick={() => updateQuantity(opt.id, -1)}
-                        disabled={qty === 0}
-                        className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors ${
-                          qty > 0
-                            ? 'bg-gray-200 hover:bg-gray-300 text-brand-dark cursor-pointer'
-                            : 'bg-gray-100 text-gray-300 cursor-not-allowed'
-                        }`}
-                        aria-label={`Decrease ${opt.name}`}
-                      >
-                        <Minus className="w-3.5 h-3.5" />
-                      </button>
-
-                      <span className={`font-display font-bold text-sm px-3 py-1 rounded-lg border text-center flex-1 ${
+                  {/* Right: Quantity Stepper */}
+                  <div className="flex items-center gap-1.5 sm:gap-2 shrink-0 sm:pt-2 sm:border-t sm:border-gray-100 sm:justify-between">
+                    <button
+                      type="button"
+                      onClick={() => updateQuantity(opt.id, -1)}
+                      disabled={qty === 0}
+                      className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm transition-colors ${
                         qty > 0
-                          ? 'bg-brand-orange text-white border-brand-orange'
-                          : 'bg-gray-50 text-gray-500 border-gray-200'
-                      }`}>
-                        {qty} {opt.id === 'dormitory' ? (qty === 1 ? 'Bed' : 'Beds') : (qty === 1 ? 'Room' : 'Rooms')}
-                      </span>
+                          ? 'bg-gray-100 active:bg-gray-200 text-brand-dark cursor-pointer'
+                          : 'bg-gray-50 text-gray-300 cursor-not-allowed'
+                      }`}
+                      aria-label={`Decrease ${opt.name}`}
+                    >
+                      <Minus className="w-3.5 h-3.5" />
+                    </button>
 
-                      <button
-                        type="button"
-                        onClick={() => updateQuantity(opt.id, 1)}
-                        className="w-8 h-8 rounded-lg bg-brand-orange hover:bg-brand-orange-hover text-white flex items-center justify-center transition-colors shadow-xs"
-                        aria-label={`Increase ${opt.name}`}
-                      >
-                        <Plus className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
+                    <span className={`w-7 sm:flex-1 text-center font-bold text-xs sm:text-sm py-1 rounded-md ${
+                      qty > 0 ? 'text-brand-orange font-extrabold' : 'text-gray-400'
+                    }`}>
+                      {qty}
+                    </span>
+
+                    <button
+                      type="button"
+                      onClick={() => updateQuantity(opt.id, 1)}
+                      className="w-8 h-8 rounded-lg bg-brand-orange active:bg-brand-orange-hover text-white flex items-center justify-center font-bold text-sm transition-colors shadow-xs"
+                      aria-label={`Increase ${opt.name}`}
+                    >
+                      <Plus className="w-3.5 h-3.5" />
+                    </button>
                   </div>
                 </div>
               );
@@ -295,134 +261,123 @@ export const PricingCalculator: React.FC = () => {
           </div>
         </div>
 
-        {/* Step 3: Stay Duration (Days) */}
-        <div className="space-y-3 pt-2 border-t border-gray-100">
-          <label className="text-xs sm:text-sm font-bold uppercase tracking-wider text-gray-700 block">
-            3. Stay Duration (Days)
+        {/* Step 3: Stay Duration */}
+        <div className="space-y-2 pt-1 border-t border-gray-100">
+          <label className="text-xs font-bold uppercase tracking-wider text-gray-700 block">
+            3. Stay Duration
           </label>
-          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-            <div className="flex items-center gap-3 w-full sm:w-72">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+            <div className="flex items-center gap-2 w-full sm:w-64">
               <button
                 type="button"
                 onClick={() => setDaysCount(Math.max(1, daysCount - 1))}
-                className="w-10 h-10 rounded-xl bg-gray-100 hover:bg-gray-200 text-brand-dark font-extrabold text-lg flex items-center justify-center transition-colors"
+                className="w-9 h-9 rounded-xl bg-gray-100 active:bg-gray-200 text-brand-dark font-extrabold text-base flex items-center justify-center"
                 aria-label="Decrease days"
               >
                 −
               </button>
-              <div className="flex-1 text-center py-2 px-4 rounded-xl border border-gray-200 bg-gray-50 font-display font-extrabold text-lg text-brand-dark">
+              <div className="flex-1 text-center py-1.5 px-3 rounded-xl border border-gray-200 bg-gray-50 font-display font-extrabold text-sm sm:text-base text-brand-dark">
                 {daysCount} {daysCount > 1 ? 'Days' : 'Day'}
               </div>
               <button
                 type="button"
                 onClick={() => setDaysCount(daysCount + 1)}
-                className="w-10 h-10 rounded-xl bg-gray-100 hover:bg-gray-200 text-brand-dark font-extrabold text-lg flex items-center justify-center transition-colors"
+                className="w-9 h-9 rounded-xl bg-gray-100 active:bg-gray-200 text-brand-dark font-extrabold text-base flex items-center justify-center"
                 aria-label="Increase days"
               >
                 +
               </button>
             </div>
 
-            {/* Quick Preset Buttons */}
-            <div className="flex flex-wrap items-center gap-2">
+            {/* Quick Chips */}
+            <div className="flex flex-wrap items-center gap-1.5">
               {[1, 2, 3, 5, 7, 15, 30].map((d) => (
                 <button
                   key={d}
                   type="button"
                   onClick={() => setDaysCount(d)}
-                  className={`text-xs px-3 py-1.5 rounded-lg border font-semibold transition-all ${
+                  className={`text-xs px-2.5 py-1 rounded-lg border font-semibold transition-all ${
                     daysCount === d
-                      ? 'bg-brand-dark text-white border-brand-dark shadow-xs'
-                      : 'bg-white text-gray-600 border-gray-200 hover:border-gray-300'
+                      ? 'bg-brand-dark text-white border-brand-dark'
+                      : 'bg-white text-gray-600 border-gray-200 active:bg-gray-100'
                   }`}
                 >
-                  {d} {d === 1 ? 'Day' : 'Days'}
+                  {d}d
                 </button>
               ))}
             </div>
           </div>
         </div>
 
-        {/* Total Calculation & Action Summary */}
-        <div className="p-5 sm:p-6 rounded-2xl bg-[#FAF9F6] border border-orange-100 space-y-4">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-gray-200/70">
+        {/* Estimated Total & Action Box */}
+        <div className="p-4 sm:p-5 rounded-2xl bg-[#FAF9F6] border border-orange-200/80 space-y-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div>
-              <span className="text-xs uppercase font-bold tracking-wider text-gray-500 block">
+              <span className="text-[11px] uppercase font-bold tracking-wider text-gray-500 block">
                 Total Estimated Tariff
               </span>
               <div className="flex items-baseline gap-2 mt-0.5">
-                <span className="text-3xl sm:text-4xl font-extrabold text-brand-orange font-display">
+                <span className="text-2xl sm:text-3xl font-extrabold text-brand-orange font-display">
                   ₹{totalAmount.toLocaleString('en-IN')}
                 </span>
                 <span className="text-xs text-gray-500 font-medium">
                   ({totalItemsCount} {totalItemsCount === 1 ? 'Unit' : 'Units'} × {daysCount} {daysCount > 1 ? 'Days' : 'Day'})
                 </span>
               </div>
-
-              {/* Breakdown Pill Tags */}
-              <div className="flex flex-wrap items-center gap-1.5 pt-2">
-                {selectedSummary.length > 0 ? (
-                  selectedSummary.map((item) => (
-                    <span
-                      key={item.id}
-                      className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-white border border-gray-200 text-[11px] font-medium text-gray-700 shadow-xs"
-                    >
-                      <span className="w-1.5 h-1.5 rounded-full bg-brand-orange" />
-                      <span>{item.quantity}× {item.name}: ₹{item.subtotal}</span>
-                    </span>
-                  ))
-                ) : (
-                  <span className="text-xs text-amber-600 font-semibold">
-                    Please select at least 1 room or bed above to calculate
-                  </span>
-                )}
-              </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-2.5">
+            {/* Booking Action Buttons */}
+            <div className="flex items-center gap-2 pt-1 sm:pt-0">
               <a
                 href={getWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-[#25D366] hover:bg-[#20bd5a] shadow-sm transition-all"
+                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-white bg-green-600 hover:bg-green-700 shadow-sm active:scale-98 transition-all"
               >
                 <MessageSquare className="w-4 h-4" />
-                <span>Reserve on WhatsApp</span>
+                <span>Confirm on WhatsApp</span>
               </a>
 
               <a
-                href={`tel:${selectedBranch === 'srinagar' ? contactDetails.srinagarPhoneRaw : contactDetails.primaryPhoneRaw}`}
-                className="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-xs sm:text-sm font-bold text-brand-dark bg-white hover:bg-gray-100 border border-gray-300 transition-colors"
+                href={`tel:${contactDetails.primaryPhoneRaw}`}
+                className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2.5 rounded-xl font-semibold text-xs text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 active:scale-98 transition-all"
               >
-                <Phone className="w-4 h-4 text-brand-orange" />
-                <span>Call {selectedBranch === 'srinagar' ? 'Srinagar: 92486 96735' : 'Gajuwaka: 90594 61033'}</span>
+                <Phone className="w-3.5 h-3.5 text-brand-orange" />
+                <span className="hidden sm:inline">Call</span>
               </a>
             </div>
           </div>
 
-          {/* Included Features & Amenities */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs text-gray-700 pt-1">
-            <div className="flex items-center gap-2">
-              <Wifi className="w-4 h-4 text-brand-orange shrink-0" />
-              <span>Free High-Speed Wi-Fi</span>
+          {/* Quick Summary Pill Row */}
+          {selectedSummary.length > 0 && (
+            <div className="flex flex-wrap items-center gap-1.5 pt-1 border-t border-gray-200/60 text-[11px] text-gray-600">
+              {selectedSummary.map((item) => (
+                <span key={item.id} className="bg-white px-2 py-0.5 rounded border border-gray-200">
+                  {item.quantity}× {item.shortName} (₹{item.subtotal})
+                </span>
+              ))}
             </div>
-            <div className="flex items-center gap-2">
-              <Clock className="w-4 h-4 text-brand-orange shrink-0" />
-              <span>24x7 Room Service & Hot Water</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Car className="w-4 h-4 text-brand-orange shrink-0" />
-              <span>Free Parking & Travels</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Shield className="w-4 h-4 text-brand-orange shrink-0" />
-              <span>CCTV Security Coverage</span>
-            </div>
-          </div>
+          )}
+        </div>
 
-          <p className="text-[11px] text-gray-400 leading-snug">
-            Base indicative tariff as advertised on premises: AC ₹799, Non-AC ₹449, Dormitory ₹200 per 24 hours. Valid across Old Gajuwaka Branch & Srinagar Branch (Hostel & Rooms). Contact management for seasonal dates, government taxes (if applicable), or long-term student/contractor rates.
-          </p>
+        {/* 4 Trust Badges */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1 text-[11px] text-gray-600">
+          <div className="flex items-center gap-1.5">
+            <Check className="w-3.5 h-3.5 text-green-600 shrink-0" />
+            <span>24h Full Stay Period</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <Check className="w-3.5 h-3.5 text-green-600 shrink-0" />
+            <span>Free Fiber Wi-Fi</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <Check className="w-3.5 h-3.5 text-green-600 shrink-0" />
+            <span>24/7 Room Service</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <Check className="w-3.5 h-3.5 text-green-600 shrink-0" />
+            <span>CCTV Protected</span>
+          </div>
         </div>
       </div>
     </div>

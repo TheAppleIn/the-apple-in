@@ -66,10 +66,10 @@ export const BranchShowcase: React.FC<BranchShowcaseProps> = ({
 
                   {/* Branch Name overlay */}
                   <div className="absolute bottom-3 left-4 right-4 text-white">
-                    <h3 className="text-base sm:text-lg font-bold font-display drop-shadow-md line-clamp-1">
+                    <h3 className="text-sm sm:text-base md:text-lg font-bold font-display drop-shadow-md leading-snug">
                       {branch.name}
                     </h3>
-                    <p className="text-[11px] text-orange-200 font-medium mt-0.5 drop-shadow-sm line-clamp-1">
+                    <p className="text-[11px] sm:text-xs text-orange-200 font-medium mt-0.5 drop-shadow-sm leading-tight">
                       {branch.tagline}
                     </p>
                   </div>

@@ -326,18 +326,18 @@ export const galleryItems = [
   // 12 Authentic Premises & Real Photographs
   {
     id: 1,
-    title: "Low Price Non-AC Room — Comfortable Bed & Wardrobe",
+    title: "Non-AC Room — Comfortable Bed & Wardrobe",
     category: "Lodge",
     image: "/images/lodge-non-ac-room-real.jpg",
-    description: "Verified photo of our low-price Non-AC room with comfortable double bed, study table, full wardrobe, wall-mounted TV, curtains, and clean tiled flooring.",
+    description: "Verified photo of our Non-AC room with comfortable double bed, study table, full wardrobe, wall-mounted TV, curtains, and clean tiled flooring.",
     verified: true,
   },
   {
     id: 2,
-    title: "Low Price AC Executive Bedroom",
+    title: "AC Executive Bedroom",
     category: "Lodge",
     image: "/images/lodge-ac-bedroom-real.jpg",
-    description: "Verified photo of our low-price AC executive bedroom with split AC cooling, clean double bed, fresh linens, and tiled floors.",
+    description: "Verified photo of our AC executive bedroom with split AC cooling, clean double bed, fresh linens, and tiled floors.",
     verified: true,
   },
   {
@@ -530,7 +530,7 @@ export interface RoomRate {
 export const accommodationRates: RoomRate[] = [
   {
     id: "non-ac-room",
-    name: "Low Price Non-AC Room",
+    name: "Non-AC Room",
     category: "Non-AC Standard / Smart Look",
     price: 449,
     priceDisplay: "449",
@@ -541,7 +541,7 @@ export const accommodationRates: RoomRate[] = [
     description: "Spacious, well-ventilated private bedroom equipped with comfortable double bed, study table, full wardrobe, curtains, and high-speed ceiling fan.",
     branchAvailability: "Gajuwaka & Srinagar Branches",
     features: [
-      "Low Price Non-AC Rooms: ₹449",
+      "Non-AC Standard Rooms: ₹449",
       "High-Speed Ceiling Fan & Ventilation",
       "Free High-Speed Wi-Fi Internet",
       "Spotless Bedding & Sanitized Daily",
@@ -552,7 +552,7 @@ export const accommodationRates: RoomRate[] = [
   },
   {
     id: "ac-room",
-    name: "Low Price AC Room",
+    name: "AC Executive Room",
     category: "Air Conditioned Executive (Basic / Deluxe)",
     price: 799,
     priceDisplay: "799",
@@ -563,7 +563,7 @@ export const accommodationRates: RoomRate[] = [
     description: "Climate-controlled private room featuring individual split AC, clean double bed, spotless linens, and attached bathroom. Available at both Gajuwaka and Srinagar branches.",
     branchAvailability: "Gajuwaka & Srinagar Branches",
     features: [
-      "Low Price AC Rooms: ₹799",
+      "AC Executive Rooms: ₹799",
       "Individual Split AC Climate Control",
       "Free High-Speed Wi-Fi Internet",
       "Comfortable Clean Double Bed & Pillows",

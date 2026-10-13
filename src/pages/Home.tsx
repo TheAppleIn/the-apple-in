@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, BedDouble, Wifi, Shield, CheckCircle2, ChevronRight, Phone, MapPin } from 'lucide-react';
+import { ArrowRight, BedDouble, Wifi, Shield, CheckCircle2, Phone, MapPin } from 'lucide-react';
 import { servicePillars, valueCards, contactDetails, accommodationRates } from '../data/content';
 import { SectionHeading } from '../components/SectionHeading';
 import { CTASection } from '../components/CTASection';
@@ -16,19 +16,19 @@ export const Home: React.FC = () => {
       {/* =========================================================================
           HERO SECTION — Simple, Clean, Professional & Perfectly Aligned
       ========================================================================= */}
-      <section className="relative min-h-[85vh] lg:min-h-[88vh] flex items-center bg-gradient-to-b from-[#FAFAF8] via-white to-[#F6F5F2] text-brand-dark overflow-hidden pt-28 pb-16 lg:pt-32 lg:pb-20 border-b border-gray-200/60">
+      <section className="relative min-h-[80vh] lg:min-h-[85vh] flex items-center bg-gradient-to-b from-[#FAFAF8] via-white to-[#F6F5F2] text-brand-dark overflow-hidden pt-24 pb-12 sm:pt-28 sm:pb-16 lg:pt-32 lg:pb-20 border-b border-gray-200/60">
         {/* Subtle architectural ambient background glow */}
         <div className="absolute top-12 right-1/4 w-[500px] h-[500px] bg-brand-orange/5 rounded-full blur-[140px] pointer-events-none" />
         <div className="absolute bottom-10 left-10 w-[400px] h-[400px] bg-amber-500/5 rounded-full blur-[120px] pointer-events-none" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-10 xl:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-16 items-center">
             
-            {/* Left Column: Clean Brand Statement & Clear Hierarchy (lg:col-span-6 xl:col-span-6) */}
-            <div className="lg:col-span-6 space-y-6 lg:space-y-7">
+            {/* Left Column: Clean Brand Statement & Clear Hierarchy */}
+            <div className="lg:col-span-6 space-y-5 lg:space-y-7">
               
               {/* Brand Pill */}
-              <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-orange-50 border border-orange-200/80 shadow-xs">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 border border-orange-200/80 shadow-xs">
                 <span className="w-2 h-2 rounded-full bg-brand-orange animate-pulse" />
                 <span className="text-xs font-bold uppercase tracking-wider text-brand-orange font-display">
                   THE APPLE IN
@@ -40,8 +40,8 @@ export const Home: React.FC = () => {
               </div>
 
               {/* Confident, High-Impact Typography */}
-              <div className="space-y-2">
-                <h1 className="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-extrabold font-display tracking-tight text-neutral-900 leading-[1.12]">
+              <div className="space-y-1">
+                <h1 className="text-3xl sm:text-5xl lg:text-5xl xl:text-6xl font-extrabold font-display tracking-tight text-neutral-900 leading-[1.12]">
                   Stay Connected.<br />
                   Stay Secure.<br />
                   <span className="text-brand-orange">
@@ -51,64 +51,64 @@ export const Home: React.FC = () => {
               </div>
 
               {/* Grounded & Authentic Supporting Copy */}
-              <p className="text-base sm:text-lg text-gray-600 font-normal leading-relaxed max-w-xl">
+              <p className="text-sm sm:text-base lg:text-lg text-gray-600 font-normal leading-relaxed max-w-xl">
                 Quality accommodation, reliable optical fiber internet, and professional CCTV surveillance solutions — all under one trusted brand in Visakhapatnam.
               </p>
 
               {/* Action Buttons */}
-              <div className="pt-1 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
+              <div className="pt-1 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                 <a
-                  href="#services-overview"
-                  className="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl text-sm sm:text-base font-bold text-white bg-brand-orange hover:bg-brand-orange-hover shadow-md hover:shadow-lg shadow-orange-500/20 transition-all duration-200 active:scale-95 text-center"
+                  href="#pricing"
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm sm:text-base font-bold text-white bg-brand-orange hover:bg-brand-orange-hover shadow-md hover:shadow-lg shadow-orange-500/20 transition-all duration-200 active:scale-95 text-center"
                 >
-                  <span>Explore Our Services</span>
+                  <span>Check Room Tariffs</span>
                   <ArrowRight className="w-4 h-4" />
                 </a>
 
                 <Link
                   to="/contact"
-                  className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm sm:text-base font-semibold text-gray-800 bg-white hover:bg-gray-50 border border-gray-200 hover:border-gray-300 shadow-xs transition-all duration-200 text-center"
+                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-sm sm:text-base font-semibold text-gray-800 bg-white hover:bg-gray-50 border border-gray-200 hover:border-gray-300 shadow-xs transition-all duration-200 text-center"
                 >
                   <span>Contact Us</span>
                 </Link>
               </div>
 
               {/* Three Value Highlights (Clean, Balanced, Cohesive) */}
-              <div className="pt-3 border-t border-gray-200/80 grid grid-cols-3 gap-3 text-left">
-                <div className="p-3 rounded-2xl bg-white border border-gray-200/70 shadow-xs">
-                  <div className="flex items-center gap-1.5 text-brand-orange mb-1">
-                    <BedDouble className="w-4 h-4 shrink-0" />
+              <div className="pt-2 border-t border-gray-200/80 grid grid-cols-3 gap-2 sm:gap-3 text-left">
+                <div className="p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-white border border-gray-200/70 shadow-xs">
+                  <div className="flex items-center gap-1.5 text-brand-orange mb-0.5">
+                    <BedDouble className="w-3.5 h-3.5 shrink-0" />
                     <span className="text-[11px] font-bold uppercase tracking-wider text-gray-900">Lodge</span>
                   </div>
-                  <div className="text-xs text-gray-500 leading-snug">AC / Non-AC & Dormitory</div>
+                  <div className="text-[11px] sm:text-xs text-gray-500 leading-snug">AC / Non-AC & Beds</div>
                 </div>
 
-                <div className="p-3 rounded-2xl bg-white border border-gray-200/70 shadow-xs">
-                  <div className="flex items-center gap-1.5 text-brand-orange mb-1">
-                    <Wifi className="w-4 h-4 shrink-0" />
+                <div className="p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-white border border-gray-200/70 shadow-xs">
+                  <div className="flex items-center gap-1.5 text-brand-orange mb-0.5">
+                    <Wifi className="w-3.5 h-3.5 shrink-0" />
                     <span className="text-[11px] font-bold uppercase tracking-wider text-gray-900">Internet</span>
                   </div>
-                  <div className="text-xs text-gray-500 leading-snug">Optical Fiber Broadband</div>
+                  <div className="text-[11px] sm:text-xs text-gray-500 leading-snug">Fiber Broadband</div>
                 </div>
 
-                <div className="p-3 rounded-2xl bg-white border border-gray-200/70 shadow-xs">
-                  <div className="flex items-center gap-1.5 text-brand-orange mb-1">
-                    <Shield className="w-4 h-4 shrink-0" />
+                <div className="p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-white border border-gray-200/70 shadow-xs">
+                  <div className="flex items-center gap-1.5 text-brand-orange mb-0.5">
+                    <Shield className="w-3.5 h-3.5 shrink-0" />
                     <span className="text-[11px] font-bold uppercase tracking-wider text-gray-900">CCTV</span>
                   </div>
-                  <div className="text-xs text-gray-500 leading-snug">Sales, Setup & Support</div>
+                  <div className="text-[11px] sm:text-xs text-gray-500 leading-snug">Sales & Setup</div>
                 </div>
               </div>
 
               {/* Address & Direct Phone Bar */}
-              <div className="flex flex-wrap items-center justify-between gap-4 text-xs text-gray-500 pt-1">
-                <div className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-brand-orange shrink-0" />
-                  <span>Old Gajuwaka & Srinagar Branches, Visakhapatnam</span>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-gray-500 pt-1">
+                <div className="flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5 text-brand-orange shrink-0" />
+                  <span className="truncate">Gajuwaka & Srinagar Branches, Visakhapatnam</span>
                 </div>
                 <a 
                   href={`tel:${contactDetails.primaryPhoneRaw}`}
-                  className="inline-flex items-center gap-1.5 text-gray-700 hover:text-brand-orange transition-colors font-medium"
+                  className="inline-flex items-center gap-1.5 text-gray-700 hover:text-brand-orange transition-colors font-medium self-start sm:self-auto"
                 >
                   <Phone className="w-3.5 h-3.5 text-brand-orange" />
                   <span>Call: +91 {contactDetails.primaryPhone}</span>
@@ -117,7 +117,7 @@ export const Home: React.FC = () => {
 
             </div>
 
-            {/* Right Column: Clean Interactive 3-Pillar Visual Panel (lg:col-span-6 xl:col-span-6) */}
+            {/* Right Column: Clean Interactive 3-Pillar Visual Panel */}
             <div className="lg:col-span-6 flex items-center justify-center">
               <HeroPillarInteractive />
             </div>
@@ -128,22 +128,22 @@ export const Home: React.FC = () => {
 
 
       {/* =========================================================================
-          BUSINESS OVERVIEW — Three Large Premium Service Blocks
+          BUSINESS OVERVIEW — Three Services Row
       ========================================================================= */}
-      <section id="services-overview" className="py-20 lg:py-28 bg-[#F7F7F5]">
+      <section id="services-overview" className="py-12 sm:py-16 lg:py-24 bg-[#F7F7F5]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
-            badge="Three Pillars of Excellence"
-            title="Integrated Solutions for Living, Working & Security"
-            subtitle="The Apple IN combines modern hospitality, high-performance networking, and dependable surveillance into one cohesive service ecosystem."
+            badge="Three Core Services"
+            title="Hospitality, Internet & Surveillance"
+            subtitle="Everything you need for comfortable living, high-speed fiber internet, and professional property security in Visakhapatnam."
             align="center"
           />
 
-          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="mt-8 sm:mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
             {servicePillars.map((service) => (
               <div
                 key={service.id}
-                className="group relative bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-soft hover:shadow-premium transition-all duration-300 flex flex-col justify-between"
+                className="group relative bg-white rounded-2xl sm:rounded-3xl overflow-hidden border border-gray-100 shadow-soft hover:shadow-premium transition-all duration-300 flex flex-col justify-between"
               >
                 {/* Image Container with Hover Zoom */}
                 <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
@@ -151,28 +151,29 @@ export const Home: React.FC = () => {
                     src={service.image}
                     alt={service.title}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                   
                   {/* Service Number Tag */}
-                  <div className="absolute top-4 left-4 bg-brand-dark/90 text-brand-orange text-xs font-extrabold px-3 py-1.5 rounded-full font-display border border-neutral-700 backdrop-blur-sm">
+                  <div className="absolute top-3 left-3 bg-brand-dark/90 text-brand-orange text-xs font-extrabold px-2.5 py-1 rounded-full font-display border border-neutral-700 backdrop-blur-sm">
                     {service.number}
                   </div>
                 </div>
 
                 {/* Content Area */}
-                <div className="p-6 sm:p-8 flex-grow flex flex-col justify-between space-y-6">
-                  <div className="space-y-3">
-                    <h3 className="text-xl sm:text-2xl font-bold font-display text-brand-dark tracking-tight">
+                <div className="p-5 sm:p-6 flex-grow flex flex-col justify-between space-y-4">
+                  <div className="space-y-2">
+                    <h3 className="text-lg sm:text-xl font-bold font-display text-brand-dark tracking-tight">
                       {service.title}
                     </h3>
-                    <p className="text-sm text-gray-600 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
                       {service.subtitle}
                     </p>
 
                     {/* Features checklist */}
-                    <ul className="pt-2 space-y-2 text-xs text-gray-600">
-                      {service.features.map((feature, idx) => (
+                    <ul className="pt-2 space-y-1.5 text-xs text-gray-600">
+                      {service.features.slice(0, 4).map((feature, idx) => (
                         <li key={idx} className="flex items-start gap-2">
                           <CheckCircle2 className="w-3.5 h-3.5 text-brand-orange shrink-0 mt-0.5" />
                           <span>{feature}</span>
@@ -182,13 +183,13 @@ export const Home: React.FC = () => {
                   </div>
 
                   {/* CTA Button */}
-                  <div className="pt-4 border-t border-gray-100">
+                  <div className="pt-3 border-t border-gray-100">
                     <Link
                       to={service.link}
-                      className="inline-flex items-center gap-2 text-sm font-bold text-brand-dark group-hover:text-brand-orange transition-colors"
+                      className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-brand-dark group-hover:text-brand-orange transition-colors"
                     >
                       <span>{service.ctaText}</span>
-                      <ArrowRight className="w-4 h-4 text-brand-orange transition-transform group-hover:translate-x-1" />
+                      <ArrowRight className="w-3.5 h-3.5 text-brand-orange transition-transform group-hover:translate-x-1" />
                     </Link>
                   </div>
                 </div>
@@ -200,124 +201,10 @@ export const Home: React.FC = () => {
 
 
       {/* =========================================================================
-          HOME — LODGE SECTION (Comfortable Stays. Thoughtfully Managed.)
-      ========================================================================= */}
-      <section className="py-20 lg:py-28 bg-white border-y border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-            
-            {/* Left: Editorial Content */}
-            <div className="lg:col-span-6 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-brand-orange bg-brand-orange-light border border-orange-200/60">
-                <BedDouble className="w-3.5 h-3.5" />
-                <span>Hospitality & Living</span>
-              </div>
-
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-display text-brand-dark tracking-tight leading-[1.15]">
-                Comfortable Stays.<br />
-                <span className="text-brand-orange">Thoughtfully Managed.</span>
-              </h2>
-
-              <p className="text-base text-gray-600 leading-relaxed">
-                The Apple IN Lodge & Dormitory provides accommodation options designed for individuals looking for a clean, convenient and comfortable stay in Visakhapatnam.
-              </p>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                <div className="p-4 rounded-2xl bg-gray-50 border border-gray-100 space-y-1">
-                  <div className="font-bold text-sm text-brand-dark flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-brand-orange" />
-                    AC / Non-AC Rooms
-                  </div>
-                  <p className="text-xs text-gray-500">
-                    Climate-controlled executive bedrooms tailored for relaxation after travel or work.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-gray-50 border border-gray-100 space-y-1">
-                  <div className="font-bold text-sm text-brand-dark flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-brand-orange" />
-                    Dormitory Accommodation
-                  </div>
-                  <p className="text-xs text-gray-500">
-                    Neat, budget-friendly shared accommodations with personal lockers and privacy curtains.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-gray-50 border border-gray-100 space-y-1">
-                  <div className="font-bold text-sm text-brand-dark flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-brand-orange" />
-                    Comfortable Rooms
-                  </div>
-                  <p className="text-xs text-gray-500">
-                    Clean linens, soft pillows, warm lighting, and sanitized spaces maintained daily.
-                  </p>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-gray-50 border border-gray-100 space-y-1">
-                  <div className="font-bold text-sm text-brand-dark flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-brand-orange" />
-                    Professional Service
-                  </div>
-                  <p className="text-xs text-gray-500">
-                    Attentive front desk assistance, welcoming atmosphere, and transparent guest support.
-                  </p>
-                </div>
-              </div>
-
-              <div className="pt-4 flex flex-wrap items-center gap-4">
-                <Link
-                  to="/about#hospitality"
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-bold text-white bg-brand-orange hover:bg-brand-orange-hover shadow-sm transition-colors"
-                >
-                  <span>Explore Lodge & Rooms</span>
-                  <ChevronRight className="w-4 h-4" />
-                </Link>
-
-                <a
-                  href={`tel:${contactDetails.primaryPhoneRaw}`}
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 transition-colors"
-                >
-                  <Phone className="w-4 h-4 text-brand-orange" />
-                  <span>Call {contactDetails.primaryPhone}</span>
-                </a>
-              </div>
-            </div>
-
-            {/* Right: Large Editorial Image */}
-            <div className="lg:col-span-6 relative">
-              <div className="relative rounded-3xl overflow-hidden shadow-premium border border-gray-200/80">
-                <img
-                  src="/images/lodge-ac-bedroom-real.jpg"
-                  alt="The Apple IN verified AC executive bedroom interior with clean double bedding and split AC"
-                  className="w-full aspect-[4/3] object-cover"
-                />
-                {/* Floating Authentic Quote Card */}
-                <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-md rounded-2xl p-4 shadow-soft border border-gray-100 flex items-center justify-between">
-                  <div>
-                    <div className="text-xs font-bold uppercase tracking-wider text-brand-orange">
-                      The Apple IN Lodge & Dormitory
-                    </div>
-                    <div className="text-sm font-semibold text-brand-dark">
-                      AC from ₹799 • Non-AC ₹449 • Dorm ₹200
-                    </div>
-                  </div>
-                  <span className="text-[11px] font-medium text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full">
-                    Visakhapatnam
-                  </span>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-
-      {/* =========================================================================
           HOME — ACCOMMODATION RATES & AMENITIES SECTION
       ========================================================================= */}
-      <section id="pricing" className="py-20 lg:py-28 bg-[#FAF9F6] border-b border-gray-200/80 scroll-mt-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+      <section id="pricing" className="py-12 sm:py-16 lg:py-24 bg-[#FAF9F6] border-y border-gray-200/80 scroll-mt-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-14">
           
           {/* Section Heading */}
           <SectionHeading
@@ -328,18 +215,18 @@ export const Home: React.FC = () => {
           />
 
           {/* 4 Pricing Cards Grid with Real Photos */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 items-stretch">
             {accommodationRates.map((room) => (
               <div
                 key={room.id}
-                className={`relative rounded-3xl overflow-hidden bg-white border flex flex-col justify-between transition-all duration-300 ${
+                className={`relative rounded-2xl sm:rounded-3xl overflow-hidden bg-white border flex flex-col justify-between transition-all duration-300 ${
                   room.popular
-                    ? 'border-brand-orange shadow-xl shadow-orange-500/10 scale-102 ring-2 ring-brand-orange/20'
+                    ? 'border-brand-orange shadow-lg shadow-orange-500/10 ring-1 ring-brand-orange/30'
                     : 'border-gray-200 hover:border-gray-300 shadow-soft hover:shadow-premium'
                 }`}
               >
                 {room.badge && (
-                  <div className="absolute top-3 right-3 z-10 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-brand-orange text-white shadow-md">
+                  <div className="absolute top-3 right-3 z-10 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-brand-orange text-white shadow-md">
                     {room.badge}
                   </div>
                 )}
@@ -351,29 +238,30 @@ export const Home: React.FC = () => {
                       src={room.image}
                       alt={room.name}
                       className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                      loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
-                    <span className="absolute bottom-2.5 left-3 text-[10px] font-semibold text-white bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-md border border-white/10">
+                    <span className="absolute bottom-2 left-2 text-[10px] font-semibold text-white bg-black/60 backdrop-blur-md px-2 py-0.5 rounded-md border border-white/10">
                       {room.category}
                     </span>
                   </div>
 
                   {/* Card Content */}
-                  <div className="p-5 sm:p-6 space-y-4">
+                  <div className="p-4 sm:p-5 space-y-3">
                     <div>
                       <div className="inline-block text-[10px] font-bold uppercase tracking-wider text-brand-orange bg-orange-50 px-2 py-0.5 rounded-full border border-orange-100 mb-1">
                         {room.branchAvailability}
                       </div>
-                      <h3 className="text-lg font-bold font-display text-brand-dark">
+                      <h3 className="text-base sm:text-lg font-bold font-display text-brand-dark">
                         {room.name}
                       </h3>
-                      <p className="text-xs text-gray-500 mt-1 leading-relaxed line-clamp-2">
+                      <p className="text-xs text-gray-500 mt-0.5 leading-relaxed line-clamp-2">
                         {room.description}
                       </p>
                     </div>
 
                     <div className="pt-2 pb-1 border-y border-gray-100 flex items-baseline gap-1">
-                      <span className="text-3xl font-extrabold text-brand-orange font-display">
+                      <span className="text-2xl sm:text-3xl font-extrabold text-brand-orange font-display">
                         ₹{room.priceDisplay}
                       </span>
                       <span className="text-xs text-gray-500 font-medium ml-1">
@@ -382,9 +270,9 @@ export const Home: React.FC = () => {
                     </div>
 
                     {/* Features List */}
-                    <ul className="space-y-1.5 pt-1">
-                      {room.features.slice(0, 5).map((feat, idx) => (
-                        <li key={idx} className="flex items-start gap-2 text-xs text-gray-700">
+                    <ul className="space-y-1 pt-1">
+                      {room.features.slice(0, 4).map((feat, idx) => (
+                        <li key={idx} className="flex items-start gap-1.5 text-xs text-gray-700">
                           <CheckCircle2 className="w-3.5 h-3.5 text-brand-orange shrink-0 mt-0.5" />
                           <span>{feat}</span>
                         </li>
@@ -394,12 +282,12 @@ export const Home: React.FC = () => {
                 </div>
 
                 {/* Card Action */}
-                <div className="p-5 sm:p-6 pt-0">
+                <div className="p-4 sm:p-5 pt-0">
                   <a
                     href={`https://wa.me/91${contactDetails.primaryPhoneRaw}?text=${encodeURIComponent(`Hi The Apple IN, I want to book ${room.name} (₹${room.priceDisplay}). Please confirm availability.`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`w-full py-3 rounded-xl text-xs sm:text-sm font-bold text-center flex items-center justify-center gap-2 transition-all ${
+                    className={`w-full py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold text-center flex items-center justify-center gap-2 transition-all ${
                       room.popular
                         ? 'bg-brand-orange hover:bg-brand-orange-hover text-white shadow-md'
                         : 'bg-brand-dark hover:bg-neutral-800 text-white'
@@ -413,23 +301,26 @@ export const Home: React.FC = () => {
             ))}
           </div>
 
-          {/* Official 14 Amenities Banner (from Official Digital Flyer) */}
-          <div className="rounded-3xl bg-white p-6 sm:p-8 border border-gray-200/90 shadow-sm space-y-6">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          {/* Interactive Multi-Day Pricing Calculator */}
+          <PricingCalculator />
+
+          {/* Official 14 Amenities Banner */}
+          <div className="rounded-2xl sm:rounded-3xl bg-white p-5 sm:p-7 border border-gray-200/90 shadow-sm space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div>
                 <span className="text-xs font-bold uppercase tracking-wider text-brand-orange block">
-                  Official Amenities & Facilities
+                  Included Amenities
                 </span>
-                <h4 className="text-xl sm:text-2xl font-bold font-display text-brand-dark mt-0.5">
+                <h4 className="text-lg sm:text-xl font-bold font-display text-brand-dark mt-0.5">
                   Complete Comfort for Every Guest & Resident
                 </h4>
               </div>
-              <span className="text-xs font-semibold px-3 py-1 rounded-full bg-orange-50 text-brand-orange border border-orange-200 self-start sm:self-auto">
+              <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-orange-50 text-brand-orange border border-orange-200 self-start sm:self-auto">
                 14+ Certified Amenities
               </span>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3 text-center">
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 text-center">
               {[
                 { title: "Free Wi-Fi", tag: "Fiber Speed" },
                 { title: "Free Parking", tag: "Safe Vehicle" },
@@ -446,7 +337,7 @@ export const Home: React.FC = () => {
                 { title: "TV Entertainment", tag: "Cable Setup" },
                 { title: "Robot Massage", tag: "Smart Lounge" },
               ].map((amenity, idx) => (
-                <div key={idx} className="p-3 rounded-2xl bg-gray-50 border border-gray-100 hover:border-orange-200 transition-colors">
+                <div key={idx} className="p-2 sm:p-2.5 rounded-xl bg-gray-50 border border-gray-100 hover:border-orange-200 transition-colors">
                   <span className="text-xs font-bold text-brand-dark block">{amenity.title}</span>
                   <span className="text-[10px] text-gray-500 block mt-0.5">{amenity.tag}</span>
                 </div>
@@ -454,171 +345,94 @@ export const Home: React.FC = () => {
             </div>
           </div>
 
-          {/* Interactive Multi-Day Pricing Calculator */}
-          <PricingCalculator />
-
           {/* Two Branches Location Showcase */}
           <BranchShowcase />
 
           {/* Verified On-Site Photos & Interactive Walkthrough */}
           <RealPremisesWalkthrough />
 
-          {/* Official Promotional Flyers & Posters Showcase (All 5 Flyers Fully Visible) */}
+          {/* Official Promotional Flyers & Posters Showcase */}
           <OfficialFlyersShowcase />
-
-          
 
         </div>
       </section>
 
 
       {/* =========================================================================
-          HOME — INTERNET SECTION (Reliable Connectivity for Everyday Life)
+          HOME — INTERNET & CCTV QUICK HIGHLIGHTS
       ========================================================================= */}
-      <section className="py-20 lg:py-28 bg-[#F7F7F5]">
+      <section className="py-12 sm:py-16 lg:py-24 bg-[#F7F7F5]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
             
-            {/* Left: Large Technology Image */}
-            <div className="lg:col-span-6 order-2 lg:order-1 relative">
-              <div className="relative rounded-3xl overflow-hidden shadow-premium border border-gray-200/80">
-                <img
-                  src="/images/internet-service.jpg"
-                  alt="Professional internet technician configuring high-speed fiber-optic network equipment"
-                  className="w-full aspect-[4/3] object-cover"
-                />
-                <div className="absolute top-4 right-4 bg-brand-dark/90 text-brand-orange text-xs font-bold px-3 py-1.5 rounded-full backdrop-blur-sm border border-neutral-700">
-                  Fiber & Broadband
+            {/* Internet Card */}
+            <div className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-gray-200 shadow-soft space-y-5 flex flex-col justify-between">
+              <div className="space-y-3">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-brand-orange bg-brand-orange-light border border-orange-200/60">
+                  <Wifi className="w-3.5 h-3.5" />
+                  <span>Optical Fiber Internet</span>
+                </div>
+                <h3 className="text-xl sm:text-2xl font-bold font-display text-brand-dark">
+                  Reliable Broadband Connectivity
+                </h3>
+                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                  Fast fiber-optic broadband for residential homes, corporate offices, and shops across Visakhapatnam, backed by dedicated local support.
+                </p>
+                <div className="grid grid-cols-2 gap-2 pt-2 text-xs text-gray-700">
+                  <div className="p-2.5 rounded-xl bg-gray-50 border border-gray-100">
+                    <span className="font-bold block text-brand-dark">High-Speed Fiber</span>
+                    <span className="text-[11px] text-gray-500">Smooth Streaming</span>
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-gray-50 border border-gray-100">
+                    <span className="font-bold block text-brand-dark">Local Field Support</span>
+                    <span className="text-[11px] text-gray-500">Prompt Assistance</span>
+                  </div>
                 </div>
               </div>
-            </div>
-
-            {/* Right: Copy & Highlights */}
-            <div className="lg:col-span-6 order-1 lg:order-2 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-brand-orange bg-brand-orange-light border border-orange-200/60">
-                <Wifi className="w-3.5 h-3.5" />
-                <span>Connectivity Solutions</span>
-              </div>
-
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-display text-brand-dark tracking-tight leading-[1.15]">
-                Reliable Connectivity for Everyday Life
-              </h2>
-
-              <p className="text-base text-gray-600 leading-relaxed">
-                The Apple IN internet service provides dependable broadband and optical fiber networking solutions for residential properties, commercial establishments, and offices in Visakhapatnam.
-              </p>
-
-              <div className="space-y-3 pt-2">
-                {[
-                  { title: "Home & Business Broadband", desc: "Stable throughput for remote work, media streaming, and multi-device households." },
-                  { title: "Fiber-Optic Infrastructure", desc: "Clean optical cabling and termination ensuring low latency and consistent signal." },
-                  { title: "Wi-Fi Setup & Optimization", desc: "Proper router placement and secure channel configuration for dead-zone elimination." },
-                  { title: "Dedicated Local Troubleshooting", desc: "Prompt technical assistance from field engineers based right in your locality." },
-                ].map((item, idx) => (
-                  <div key={idx} className="flex items-start gap-3 p-3 rounded-xl bg-white border border-gray-100 shadow-sm">
-                    <CheckCircle2 className="w-4 h-4 text-brand-orange shrink-0 mt-1" />
-                    <div>
-                      <div className="text-sm font-bold text-brand-dark">{item.title}</div>
-                      <div className="text-xs text-gray-500 mt-0.5">{item.desc}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
               <div className="pt-2">
                 <Link
                   to="/internet"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-bold text-white bg-brand-orange hover:bg-brand-orange-hover shadow-sm transition-colors"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white bg-brand-orange hover:bg-brand-orange-hover shadow-sm transition-colors"
                 >
                   <span>Explore Internet Services</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
             </div>
 
-          </div>
-        </div>
-      </section>
-
-
-      {/* =========================================================================
-          HOME — CCTV SECTION (Security You Can See.)
-      ========================================================================= */}
-      <section className="py-20 lg:py-28 bg-white border-t border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-            
-            {/* Left: Content */}
-            <div className="lg:col-span-6 space-y-6">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-brand-orange bg-brand-orange-light border border-orange-200/60">
-                <Shield className="w-3.5 h-3.5" />
-                <span>Security & Surveillance</span>
-              </div>
-
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-display text-brand-dark tracking-tight leading-[1.15]">
-                Security You Can See.
-              </h2>
-
-              <p className="text-base text-gray-600 leading-relaxed">
-                The Apple IN delivers professional CCTV sales, expert installation, and reliable maintenance services for residential homes, retail stores, commercial offices, and properties across Visakhapatnam.
-              </p>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                {[
-                  "CCTV Camera Sales",
-                  "Precision Wall & Ceiling Installation",
-                  "NVR / DVR Storage Setup",
-                  "Remote Mobile Monitoring",
-                  "Preventative Maintenance",
-                  "Repair & Hardware Replacement",
-                ].map((point, idx) => (
-                  <div key={idx} className="flex items-center gap-2.5 text-sm text-gray-700 font-medium">
-                    <span className="w-2 h-2 rounded-full bg-brand-orange shrink-0" />
-                    <span>{point}</span>
+            {/* CCTV Card */}
+            <div className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-gray-200 shadow-soft space-y-5 flex flex-col justify-between">
+              <div className="space-y-3">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider text-brand-orange bg-brand-orange-light border border-orange-200/60">
+                  <Shield className="w-3.5 h-3.5" />
+                  <span>Security & Surveillance</span>
+                </div>
+                <h3 className="text-xl sm:text-2xl font-bold font-display text-brand-dark">
+                  CCTV Sales & Installation
+                </h3>
+                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                  High-definition camera setups, DVR/NVR recorders, remote mobile viewing, and comprehensive hardware maintenance.
+                </p>
+                <div className="grid grid-cols-2 gap-2 pt-2 text-xs text-gray-700">
+                  <div className="p-2.5 rounded-xl bg-gray-50 border border-gray-100">
+                    <span className="font-bold block text-brand-dark">HD Mobile View</span>
+                    <span className="text-[11px] text-gray-500">Live Phone Stream</span>
                   </div>
-                ))}
-              </div>
-
-              <div className="pt-4 flex flex-wrap items-center gap-4">
-                <Link
-                  to="/cctv"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-bold text-white bg-brand-orange hover:bg-brand-orange-hover shadow-sm transition-colors"
-                >
-                  <span>Explore CCTV Services</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-
-                <Link
-                  to="/contact"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-sm font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 transition-colors"
-                >
-                  <span>Request Site Assessment</span>
-                </Link>
-              </div>
-            </div>
-
-            {/* Right: Security Image */}
-            <div className="lg:col-span-6 relative">
-              <div className="relative rounded-3xl overflow-hidden shadow-premium border border-gray-200/80">
-                <img
-                  src="/images/cctv-installation.jpg"
-                  alt="Professional CCTV technician installing security camera on modern property"
-                  className="w-full aspect-[4/3] object-cover"
-                />
-                <div className="absolute bottom-4 left-4 right-4 bg-brand-dark/95 backdrop-blur-md text-white rounded-2xl p-4 border border-neutral-800 flex items-center justify-between">
-                  <div>
-                    <div className="text-xs font-bold uppercase tracking-wider text-brand-orange">
-                      CCTV Sales & Service
-                    </div>
-                    <div className="text-sm font-semibold">
-                      Residential • Commercial • Retail
-                    </div>
+                  <div className="p-2.5 rounded-xl bg-gray-50 border border-gray-100">
+                    <span className="font-bold block text-brand-dark">Clean Concealed Wiring</span>
+                    <span className="text-[11px] text-gray-500">Neat Finish</span>
                   </div>
-                  <span className="text-xs text-gray-400 bg-neutral-800 px-3 py-1 rounded-full">
-                    Visakhapatnam
-                  </span>
                 </div>
               </div>
+              <div className="pt-2">
+                <Link
+                  to="/cctv"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white bg-brand-dark hover:bg-neutral-800 shadow-sm transition-colors"
+                >
+                  <span>Explore CCTV Services</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
             </div>
 
           </div>
@@ -627,9 +441,9 @@ export const Home: React.FC = () => {
 
 
       {/* =========================================================================
-          HOME — WHY CHOOSE US (4 Premium Value Cards)
+          HOME — WHY CHOOSE US
       ========================================================================= */}
-      <section className="py-20 lg:py-28 bg-[#F7F7F5] border-t border-gray-100">
+      <section className="py-12 sm:py-16 lg:py-20 bg-white border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <SectionHeading
             badge="The Apple IN Difference"
@@ -638,26 +452,26 @@ export const Home: React.FC = () => {
             align="center"
           />
 
-          <div className="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {valueCards.map((card, idx) => (
               <div
                 key={idx}
-                className="bg-white rounded-2xl p-8 border border-gray-100 shadow-soft hover:shadow-premium hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
+                className="bg-[#F7F7F5] rounded-2xl p-6 border border-gray-100 shadow-xs hover:shadow-soft transition-all duration-300 flex flex-col justify-between"
               >
-                <div className="space-y-4">
-                  <div className="w-10 h-10 rounded-xl bg-brand-orange-light text-brand-orange flex items-center justify-center font-black font-display text-base">
+                <div className="space-y-3">
+                  <div className="w-8 h-8 rounded-lg bg-orange-100 text-brand-orange flex items-center justify-center font-black font-display text-xs">
                     0{idx + 1}
                   </div>
-                  <h3 className="text-lg font-bold font-display text-brand-dark">
+                  <h3 className="text-base font-bold font-display text-brand-dark">
                     {card.title}
                   </h3>
-                  <p className="text-sm text-gray-600 leading-relaxed">
+                  <p className="text-xs text-gray-600 leading-relaxed">
                     {card.description}
                   </p>
                 </div>
 
-                <div className="mt-6 pt-4 border-t border-gray-100">
-                  <span className="text-[11px] font-semibold tracking-wider uppercase text-brand-orange">
+                <div className="mt-4 pt-3 border-t border-gray-200/60">
+                  <span className="text-[10px] font-bold tracking-wider uppercase text-brand-orange">
                     Verified Quality
                   </span>
                 </div>

@@ -15,16 +15,16 @@ interface PhotoSpotlight {
 const photoCollection: PhotoSpotlight[] = [
   {
     id: 'non-ac-room',
-    title: 'Low Price Non-AC Room',
+    title: 'Non-AC Room',
     tag: 'Hospitality • Non-AC Room',
     rate: '₹449',
     image: '/images/lodge-non-ac-room-real.jpg',
-    caption: 'Verified real photograph of our low price Non-AC bedroom featuring wooden cot and headboard, comfortable mattress, study desk, wardrobe, curtains, and wall-mounted TV.',
+    caption: 'Verified real photograph of our Non-AC bedroom featuring wooden cot and headboard, comfortable mattress, study desk, wardrobe, curtains, and wall-mounted TV.',
     specs: ['Comfortable Double Bed', 'Wardrobe & Study Desk', 'Free High-Speed Wi-Fi', 'Daily Housekeeping'],
   },
   {
     id: 'ac-room',
-    title: 'Low Price AC Executive Bedroom',
+    title: 'AC Executive Bedroom',
     tag: 'Hospitality • AC Room',
     rate: '₹799',
     image: '/images/lodge-ac-bedroom-real.jpg',
