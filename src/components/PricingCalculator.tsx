@@ -105,18 +105,26 @@ export const PricingCalculator: React.FC = () => {
 
   const getWhatsAppUrl = () => {
     const branchLabel = selectedBranch === 'srinagar'
-      ? 'Srinagar Branch (Near Ramalayam Arch / Apollo)'
+      ? 'Srinagar Branch (Hostel & Rooms)'
       : selectedBranch === 'gajuwaka'
-      ? 'Old Gajuwaka Branch (38 Bus Stop Backside)'
-      : 'Any Available Branch in Vizag';
+      ? 'Old Gajuwaka Branch'
+      : 'Visakhapatnam';
     
+    const dayLabel = daysCount === 1 ? '1 day' : `${daysCount} days`;
+
     const itemsLines = selectedSummary.length > 0
-      ? selectedSummary.map((item) => `  • ${item.name}: ${item.quantity} × ₹${item.priceDisplay} = ₹${item.subtotal}`).join('\n')
-      : '  • 1 Room Enquired';
+      ? selectedSummary.map((item) => {
+          const unitWord = item.unit === 'bed' ? (item.quantity === 1 ? 'bed' : 'beds') : (item.quantity === 1 ? 'room' : 'rooms');
+          if (daysCount > 1) {
+            return `• ${item.name}: ${item.quantity} ${unitWord} × ₹${item.priceDisplay}/day × ${daysCount} days = ₹${item.subtotal.toLocaleString('en-IN')}`;
+          }
+          return `• ${item.name}: ${item.quantity} ${unitWord} × ₹${item.priceDisplay} = ₹${item.subtotal.toLocaleString('en-IN')}`;
+        }).join('\n')
+      : '• Room enquiry';
 
     const targetPhone = selectedBranch === 'srinagar' ? contactDetails.srinagarPhoneRaw : contactDetails.primaryPhoneRaw;
     const text = encodeURIComponent(
-      `Hello The Apple IN,\nI would like to check availability and book:\n• Branch: ${branchLabel}\n• Stay: ${daysCount} Day(s)\n• Rooms / Beds:\n${itemsLines}\n• Estimated Total: ₹${totalAmount.toLocaleString('en-IN')}\n\nPlease confirm availability.`
+      `Hello The Apple IN,\n\nI want to check room availability and book:\nBranch: ${branchLabel}\nDuration: ${dayLabel}\n\nSelected Rooms:\n${itemsLines}\n\nTotal Estimated Amount: ₹${totalAmount.toLocaleString('en-IN')}\n\nPlease confirm availability and booking details. Thank you!`
     );
     return `https://wa.me/91${targetPhone}?text=${text}`;
   };

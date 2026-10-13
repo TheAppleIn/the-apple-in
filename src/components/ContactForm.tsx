@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Send, CheckCircle2, AlertCircle, RefreshCw } from 'lucide-react';
+import { MessageSquare, CheckCircle2, AlertCircle, RefreshCw } from 'lucide-react';
+import { contactDetails } from '../data/content';
 
 interface FormState {
   fullName: string;
@@ -46,19 +47,12 @@ export const ContactForm: React.FC<{ defaultService?: string }> = ({ defaultServ
       errs.phone = 'Phone number should be at least 10 digits.';
     }
 
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.email.trim()) {
-      errs.email = 'Please provide your email address.';
-    } else if (!emailPattern.test(formData.email.trim())) {
-      errs.email = 'Please enter a valid email format.';
-    }
-
     if (!formData.service) {
       errs.service = 'Please select the service required.';
     }
 
     if (!formData.message.trim()) {
-      errs.message = 'Please provide a short message or description of your requirement.';
+      errs.message = 'Please describe your requirement or message.';
     }
 
     setErrors(errs);
@@ -70,11 +64,27 @@ export const ContactForm: React.FC<{ defaultService?: string }> = ({ defaultServ
     if (!validate()) return;
 
     setIsSubmitting(true);
-    // Simulate frontend validation & submission delay
+
+    // Build clean WhatsApp message
+    const emailLine = formData.email.trim() ? `• Email: ${formData.email.trim()}\n` : '';
+    const text = encodeURIComponent(
+      `Hello The Apple IN,\n\nI want to make an enquiry:\n• Name: ${formData.fullName.trim()}\n• Contact Phone: ${formData.phone.trim()}\n${emailLine}• Service Needed: ${formData.service}\n\n• Requirement / Message:\n${formData.message.trim()}\n\nPlease reply with availability and details. Thank you!`
+    );
+
+    // Determine target recipient based on service type
+    const targetPhone = formData.service === 'Internet Service'
+      ? contactDetails.secondaryPhoneRaw
+      : contactDetails.primaryPhoneRaw;
+
+    const whatsappUrl = `https://wa.me/91${targetPhone}?text=${text}`;
+
+    // Open WhatsApp
+    window.open(whatsappUrl, '_blank');
+
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
-    }, 600);
+    }, 400);
   };
 
   const handleReset = () => {
@@ -98,21 +108,30 @@ export const ContactForm: React.FC<{ defaultService?: string }> = ({ defaultServ
 
         <div className="space-y-2 max-w-md mx-auto">
           <h3 className="text-2xl font-bold font-display text-brand-dark">
-            Thank you. Your enquiry has been received.
+            Enquiry Sent via WhatsApp!
           </h3>
           <p className="text-gray-600 text-sm leading-relaxed">
-            The Apple IN team will review your requirement and contact you at <strong className="text-brand-dark">{formData.phone}</strong> or via <strong className="text-brand-dark">{formData.email}</strong> shortly.
+            Your enquiry details have been prepared and opened on WhatsApp. If WhatsApp didn't open automatically, you can send it again below.
           </p>
         </div>
 
-        <div className="pt-2">
+        <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <button
+            type="button"
+            onClick={handleSubmit}
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-bold text-white bg-green-600 hover:bg-green-700 transition-colors shadow-sm"
+          >
+            <MessageSquare className="w-4 h-4" />
+            <span>Open WhatsApp Again</span>
+          </button>
+
           <button
             type="button"
             onClick={handleReset}
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 transition-colors"
           >
             <RefreshCw className="w-3.5 h-3.5" />
-            <span>Send Another Message</span>
+            <span>Send New Enquiry</span>
           </button>
         </div>
       </div>
@@ -282,23 +301,23 @@ export const ContactForm: React.FC<{ defaultService?: string }> = ({ defaultServ
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl text-white font-bold bg-brand-orange hover:bg-brand-orange-hover shadow-md hover:shadow-orange-500/20 transition-all active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
+        className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl text-white font-bold bg-green-600 hover:bg-green-700 shadow-md hover:shadow-green-600/20 transition-all active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
       >
         {isSubmitting ? (
           <>
             <RefreshCw className="w-4 h-4 animate-spin" />
-            <span>Processing...</span>
+            <span>Opening WhatsApp...</span>
           </>
         ) : (
           <>
-            <Send className="w-4 h-4" />
-            <span>Send Enquiry</span>
+            <MessageSquare className="w-4 h-4" />
+            <span>Send Enquiry via WhatsApp</span>
           </>
         )}
       </button>
 
-      <p className="text-[11px] text-center text-gray-400">
-        Your enquiry is sent directly to The Apple IN support team.
+      <p className="text-[11px] text-center text-gray-500">
+        Your enquiry details will open directly in WhatsApp for instant assistance.
       </p>
     </form>
   );
